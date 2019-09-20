@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from '../assets/logo.svg';
+import React, { useState } from 'react';
 import '../css/App.css';
 
+import { Button, Drawer } from 'antd';
+import styled from 'styled-components';
+
+import CustomForm from './CustomForm';
+import SummaryCard from "./SummaryCard";
+
+const AppWrapper = styled('div')`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Header = styled('div')`
+  width: 100%;
+  height: 50px;
+  background: #e8e8e8;
+  padding: 9px;
+`;
+
+const Content = styled('div')`
+  padding: 20px;
+`;
+
 const App: React.FC = () => {
+  const [visible, setVisible] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppWrapper>
+      <Header>
+        <Button icon="menu" onClick={() => setVisible(true)} />
+      </Header>
+      <Content>
+        <CustomForm />
+      </Content>
+      <Drawer
+        title="Basic Drawer"
+        placement="left"
+        onClose={() => setVisible(false)}
+        visible={visible}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Drawer>
+    </AppWrapper>
   );
-}
+};
 
 export default App;
