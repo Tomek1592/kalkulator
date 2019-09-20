@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 
 import { Form, InputNumber, Select, Button } from 'antd';
-import styled from 'styled-components';
 
 import SummaryCard from "./SummaryCard";
-
-const CustomFormWrapper = styled(Form)`
-  margin-top: 40px;
-`;
 
 const CustomForm: React.FC = () => {
   const style = { width: '100%' };
@@ -35,12 +30,6 @@ const CustomForm: React.FC = () => {
     setIncome(value);
   };
 
-  // price: 100
-  // withoutVat: 100/23% = 81,3
-  // vatSavings: 100 - withoutVat = 18,7
-  // total: withoutVat * 18% = 66,67
-  // totalSavings: 100 - total = 33,33
-
   const submitForm = (e: any) => {
     const withoutVat = vat > 0 ? price / vat : 0;
     const vatSavings = price - withoutVat;
@@ -56,7 +45,7 @@ const CustomForm: React.FC = () => {
   return (
     <>
       {showSummary && <SummaryCard sum={sum} />}
-      <CustomFormWrapper onSubmit={submitForm}>
+      <Form onSubmit={submitForm}>
         <Form.Item label="Kwota">
           <InputNumber
             value={price}
@@ -84,7 +73,7 @@ const CustomForm: React.FC = () => {
         <Button type="primary" htmlType="submit">
           Oblicz
         </Button>
-      </CustomFormWrapper>
+      </Form>
     </>
   )
 };

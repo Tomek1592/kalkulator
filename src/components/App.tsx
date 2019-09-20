@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import '../css/App.css';
 
-import { Button, Drawer } from 'antd';
+import { Button } from 'antd';
 import styled from 'styled-components';
 
 import CustomForm from './CustomForm';
-import SummaryCard from "./SummaryCard";
+import CustomMenu from './CustomMenu';
 
 const AppWrapper = styled('div')`
   display: flex;
@@ -23,7 +23,7 @@ const Content = styled('div')`
   padding: 20px;
 `;
 
-const App: React.FC = () => {
+const App: FC = () => {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -34,16 +34,7 @@ const App: React.FC = () => {
       <Content>
         <CustomForm />
       </Content>
-      <Drawer
-        title="Basic Drawer"
-        placement="left"
-        onClose={() => setVisible(false)}
-        visible={visible}
-      >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Drawer>
+      <CustomMenu visible={visible} setVisible={setVisible} />
     </AppWrapper>
   );
 };

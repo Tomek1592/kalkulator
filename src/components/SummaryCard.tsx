@@ -5,26 +5,26 @@ import styled from 'styled-components';
 
 const SummaryCardWrapper = styled('div')`
   width: 100%;
-  height: 230px;
-  padding: 30px;
+  padding: 25px;
+  margin-bottom: 40px;
   border-radius: 3px;
-  background-color: #6bf178;
+  background-color: #06d6a0;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
 `;
 
 const CustomIcon = styled(Icon)`
-  font-size: 40px;
+  font-size: 25px;
   color: #fff;
 `;
 
 const CustomText = styled('span')`
-  font-size: 40px;
+  font-size: 25px;
   margin-left: 5px;
   color: #fff;
 `;
 
 const Suffix = styled('span')`
-  font-size: 25px;
+  font-size: 15px;
   color: #fff;
   margin-left: 3px;
 `;
