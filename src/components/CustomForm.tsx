@@ -55,8 +55,7 @@ const CustomForm: React.FC = () => {
 
   return (
     <>
-      {/*{showSummary && <SummaryCard sum={sum} />}*/}
-      <SummaryCard sum={sum} />
+      {showSummary && <SummaryCard sum={sum} />}
       <CustomFormWrapper onSubmit={submitForm}>
         <Form.Item label="Kwota">
           <InputNumber
