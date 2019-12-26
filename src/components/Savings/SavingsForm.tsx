@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 
-import { Form, InputNumber, Select, Button } from 'antd';
+import { Form, InputNumber, Button, Radio } from 'antd';
 
 import SummaryCard from "./SummaryCard";
 
-const CustomForm: React.FC = () => {
+const SavingsForm: FC = () => {
   const style = { width: '100%' };
 
   const [price, setPrice] = useState(0);
@@ -22,12 +22,12 @@ const CustomForm: React.FC = () => {
     setPrice(value);
   };
 
-  const handleChangeVat = (value: number) => {
-    setVat(value);
+  const handleChangeVat = (e: any) => {
+    setVat(e.target.value);
   };
 
-  const handleChangeIncome = (value: number) => {
-    setIncome(value);
+  const handleChangeIncome = (e: any) => {
+    setIncome(e.target.value);
   };
 
   const submitForm = (e: any) => {
@@ -57,18 +57,28 @@ const CustomForm: React.FC = () => {
           />
         </Form.Item>
         <Form.Item label="Stawka VAT">
-          <Select defaultValue={1.23} style={style} onChange={handleChangeVat}>
-            <Select.Option value={0}>0%</Select.Option>
-            <Select.Option value={1.08}>8%</Select.Option>
-            <Select.Option value={1.23}>23%</Select.Option>
-          </Select>
+          <Radio.Group
+            defaultValue={1.23}
+            style={style}
+            onChange={(e) => handleChangeVat(e)}
+            buttonStyle="solid"
+          >
+            <Radio.Button value={0}>0%</Radio.Button>
+            <Radio.Button value={1.08}>8%</Radio.Button>
+            <Radio.Button value={1.23}>23%</Radio.Button>
+          </Radio.Group>
         </Form.Item>
         <Form.Item label="Podatek dochodowy">
-          <Select defaultValue={0.82} style={style} onChange={handleChangeIncome}>
-            <Select.Option value={0.82}>18%</Select.Option>
-            <Select.Option value={0.81}>19%</Select.Option>
-            <Select.Option value={0.68}>32%</Select.Option>
-          </Select>
+          <Radio.Group
+            defaultValue={0.83}
+            style={style}
+            onChange={(e) => handleChangeIncome(e)}
+            buttonStyle="solid"
+          >
+            <Radio.Button value={0.83}>17%</Radio.Button>
+            <Radio.Button value={0.81}>19%</Radio.Button>
+            <Radio.Button value={0.68}>32%</Radio.Button>
+          </Radio.Group>
         </Form.Item>
         <Button type="primary" htmlType="submit">
           Oblicz
@@ -78,4 +88,4 @@ const CustomForm: React.FC = () => {
   )
 };
 
-export default CustomForm;
+export default SavingsForm;

@@ -2,6 +2,8 @@
   <dictionary name="user">
     <words>
       <w>formik</w>
+      <w>oldage</w>
+      <w>stypes</w>
     </words>
   </dictionary>
 </component>
