@@ -1,11 +1,14 @@
 import React, { useState, FC } from 'react';
-import '../css/App.css';
+import { BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
 
 import { Button } from 'antd';
 import styled from 'styled-components';
 
-import CustomForm from './CustomForm';
+import Savings from './Savings/Savings';
+import Profit from './Profit/Profit';
 import CustomMenu from './CustomMenu';
+
+import '../css/App.css';
 
 const AppWrapper = styled('div')`
   display: flex;
@@ -27,15 +30,24 @@ const App: FC = () => {
   const [visible, setVisible] = useState(false);
 
   return (
-    <AppWrapper>
-      <Header>
-        <Button icon="menu" onClick={() => setVisible(true)} />
-      </Header>
-      <Content>
-        <CustomForm />
-      </Content>
-      <CustomMenu visible={visible} setVisible={setVisible} />
-    </AppWrapper>
+    <Router>
+      <AppWrapper>
+        <Header>
+          <Button icon="menu" onClick={() => setVisible(true)} />
+        </Header>
+        <Content>
+          <Switch>
+            <Route exact path="/">
+              <Savings />
+            </Route>
+            <Route exact path="/profit">
+              <Profit />
+            </Route>
+          </Switch>
+        </Content>
+        <CustomMenu visible={visible} setVisible={setVisible} />
+      </AppWrapper>
+    </Router>
   );
 };
 
