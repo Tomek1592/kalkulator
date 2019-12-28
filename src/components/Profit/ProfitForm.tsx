@@ -1,8 +1,26 @@
 import React, { FC, useState } from 'react';
-
-import { Checkbox, Form, InputNumber, Button, Radio } from 'antd';
+import { Checkbox, Drawer, Form, InputNumber, Button, Radio } from 'antd';
+import styled from 'styled-components';
 
 import SummaryCard from './SummaryCard';
+
+const FormItem = styled(Form.Item)`
+  border: 1px solid #e8e8e8;
+  padding: 10px !important;
+  margin-bottom: 10px !important;
+  border-radius: 3px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+`;
+
+const CustomButton = styled(Button)`
+  width: 100%;
+  height: 50px !important;
+  
+  span {
+    font-size: 20px;
+  }
+`;
+
 
 // ((8000 - 213,57)*17%)-294,76
 const INSURANCE = {
@@ -28,12 +46,12 @@ const ProfitForm: FC = () => {
     { id: 'zus-type-3', value: ZUS_RATES.LEVEL2, description: 'Normalny ZUS' }
   ];
 
-  const [income, setIncome] = useState(0);
+  const [income, setIncome] = useState(8000);
   const [incomeTax, setIncomeTax] = useState(defaultIncomeTax);
   const [ZUS, setZUS] = useState(defaultZUS);
-  const [total, setTotal] = useState(0);
-  const [showSummary, setShowSummary] = useState(false);
+  const [total, setTotal] = useState({ pit36: 0,  cleanIncome: 0,  ZUS: 0 });
   const [sickInsurance, setSickInsurance] = useState(true);
+  const [resultDrawer, setResultDrawer] = useState(false);
 
   const handleChangeIncome = (value: any) => {
     setIncome(value);
@@ -52,7 +70,7 @@ const ProfitForm: FC = () => {
   };
 
   const submitForm = (e: any) => {
-    setTotal(0);
+    setTotal({ pit36: 0, cleanIncome: 0, ZUS: 0 });
     let basicInsurance = INSURANCE.OLDAGE + INSURANCE.PENSION + INSURANCE.ACCIDENT;
 
     if (sickInsurance) {
@@ -62,27 +80,37 @@ const ProfitForm: FC = () => {
     const totalHealth = (INSURANCE.HEALTH * 0.0775) / 0.09;
     let pit36 = Math.round(((income - basicInsurance) * incomeTax)) - totalHealth;
 
-    setShowSummary(false);
+    setResultDrawer(false);
     e.preventDefault();
-    setTotal(Math.round(income - pit36 - ZUS));
-    setShowSummary(true);
+    setTotal({
+      pit36: Math.round(pit36),
+      cleanIncome: Math.round(income - pit36 - ZUS),
+      ZUS: Math.round(ZUS)
+    });
+    setResultDrawer(true);
   };
 
   return (
     <>
-      {showSummary && <SummaryCard total={total} />}
+      <Drawer
+        placement="right"
+        width="100%"
+        onClose={() => setResultDrawer(false)}
+        visible={resultDrawer}
+      >
+        <SummaryCard total={total} />
+      </Drawer>
       <Form onSubmit={submitForm}>
-        <Form.Item label="Kwota">
+        <FormItem label="Kwota netto" extra="Podaj kwotę netto na fakturze">
           <InputNumber
             value={income}
-            defaultValue={0}
             min={0}
             max={1000000}
             style={style}
             onChange={handleChangeIncome}
           />
-        </Form.Item>
-        <Form.Item label="Podatek dochodowy">
+        </FormItem>
+        <FormItem label="Podatek dochodowy" extra="Podaj stawkę podatku dochodowego">
           <Radio.Group
             defaultValue={defaultIncomeTax}
             style={style}
@@ -93,8 +121,8 @@ const ProfitForm: FC = () => {
             <Radio.Button value={0.19}>19%</Radio.Button>
             <Radio.Button value={0.32}>32%</Radio.Button>
           </Radio.Group>
-        </Form.Item>
-        <Form.Item label="Składki ZUS">
+        </FormItem>
+        <FormItem label="Składki ZUS" extra="Jaką składkę ZUS opłacasz">
           <Radio.Group
             defaultValue={defaultZUS}
             style={style}
@@ -107,18 +135,18 @@ const ProfitForm: FC = () => {
               </Radio.Button>
             ))}
           </Radio.Group>
-        </Form.Item>
-        <Form.Item>
+        </FormItem>
+        <FormItem help="Czy opłacasz stawkę chorobową?">
           <Checkbox
             defaultChecked={sickInsurance}
             onChange={handleChangeSickInsurance}
           >
-            Składka chorobowa?
+            Opłacam składkę chorobową
           </Checkbox>
-        </Form.Item>
-        <Button type="primary" htmlType="submit">
+        </FormItem>
+        <CustomButton type="primary" htmlType="submit">
           Oblicz
-        </Button>
+        </CustomButton>
       </Form>
     </>
   )
