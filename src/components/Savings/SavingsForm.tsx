@@ -1,25 +1,35 @@
 import React, { FC, useState } from 'react';
+import {Form, InputNumber, Radio, Drawer} from 'antd';
+import { faCut, faWallet } from '@fortawesome/free-solid-svg-icons';
+import styled from "styled-components";
 
-import { Form, InputNumber, Button, Radio } from 'antd';
+import SummaryCard from '../Common/SummaryCard';
+import SubmitButton from '../Common/SubmitButton';
 
-import SummaryCard from "./SummaryCard";
+const FormItem = styled(Form.Item)`
+  border: 1px solid #e8e8e8;
+  padding: 10px !important;
+  margin-bottom: 10px !important;
+  border-radius: 3px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+`;
 
 const SavingsForm: FC = () => {
   const style = { width: '100%' };
 
-  const [price, setPrice] = useState(0);
+  const [itemPrice, setItemPrice] = useState(0);
   const [vat, setVat] = useState(1.23);
-  const [income, setIncome] = useState(0.82);
-  const [sum, setSum] = useState({
-    withoutVat: 0,
+  const [incomeTax, setIncomeTax] = useState(0.82);
+  const [total, setTotal] = useState({
+    incomeTaxSavings: 0,
     vatSavings: 0,
     totalSavings: 0,
     total: 0
   });
-  const [showSummary, setShowSummary] = useState(false);
+  const [resultDrawer, setResultDrawer] = useState(false);
 
   const handleChangePrice = (value: any) => {
-    setPrice(value);
+    setItemPrice(value);
   };
 
   const handleChangeVat = (e: any) => {
@@ -27,36 +37,82 @@ const SavingsForm: FC = () => {
   };
 
   const handleChangeIncome = (e: any) => {
-    setIncome(e.target.value);
+    setIncomeTax(e.target.value);
   };
 
   const submitForm = (e: any) => {
-    const withoutVat = vat > 0 ? price / vat : 0;
-    const vatSavings = price - withoutVat;
-    const total = vat > 0 ? withoutVat * income : price * income;
-    const totalSavings = price - total;
+    setTotal({ incomeTaxSavings: 0, vatSavings: 0, totalSavings: 0, total: 0 });
 
-    setShowSummary(false);
+    const withoutVat = vat > 0 ? (itemPrice / vat) : 0;
+    const incomeTaxSavings = itemPrice - (itemPrice * incomeTax);
+    const vatSavings = itemPrice - withoutVat;
+    const total = vat > 0 ? (withoutVat * incomeTax) : (itemPrice * incomeTax);
+    const totalSavings = itemPrice - total;
+
+    setResultDrawer(false);
     e.preventDefault();
-    setSum({ withoutVat, vatSavings, totalSavings, total });
-    setShowSummary(true);
+    setTotal({
+      incomeTaxSavings: Math.round(incomeTaxSavings),
+      vatSavings: Math.round(vatSavings),
+      totalSavings: Math.round(totalSavings),
+      total: Math.round(total)
+    });
+    setResultDrawer(true);
   };
 
   return (
     <>
-      {showSummary && <SummaryCard sum={sum} />}
+      <Drawer
+        placement="right"
+        width="100%"
+        onClose={() => setResultDrawer(false)}
+        visible={resultDrawer}
+      >
+        <SummaryCard
+          data={[
+            {
+              id: 'income-tax-savings',
+              label: 'Zaoszczędzone z Podatku dochodowego',
+              value: total.incomeTaxSavings,
+              color: '#36A2EB',
+              icon: faCut
+            },
+            {
+              id: 'vat-savings',
+              label: 'Zaoszczędzone z VAT',
+              value: total.vatSavings,
+              color: '#FFCE56',
+              icon: faCut
+            },
+            {
+              id: 'total-savings',
+              label: 'Łącznie zaoszczędzone',
+              value: total.totalSavings,
+              color: '#6ce865',
+              icon: faWallet
+            },
+            {
+              id: 'total',
+              label: 'Łącznie do zapłacenia',
+              value: total.total,
+              color: '#FF6384',
+              icon: faCut
+            }
+          ]}
+        />
+      </Drawer>
       <Form onSubmit={submitForm}>
-        <Form.Item label="Kwota">
+        <FormItem label="Kwota brutto" extra="Podaj kwotę brutto produktu">
           <InputNumber
-            value={price}
+            value={itemPrice}
             defaultValue={0}
             min={0}
             max={10000}
             style={style}
             onChange={handleChangePrice}
           />
-        </Form.Item>
-        <Form.Item label="Stawka VAT">
+        </FormItem>
+        <FormItem label="Stawka VAT" extra="Podaj stawkę podatku VAT">
           <Radio.Group
             defaultValue={1.23}
             style={style}
@@ -67,8 +123,8 @@ const SavingsForm: FC = () => {
             <Radio.Button value={1.08}>8%</Radio.Button>
             <Radio.Button value={1.23}>23%</Radio.Button>
           </Radio.Group>
-        </Form.Item>
-        <Form.Item label="Podatek dochodowy">
+        </FormItem>
+        <FormItem label="Podatek dochodowy" extra="Podaj stawkę podatku dochodowego">
           <Radio.Group
             defaultValue={0.83}
             style={style}
@@ -79,10 +135,8 @@ const SavingsForm: FC = () => {
             <Radio.Button value={0.81}>19%</Radio.Button>
             <Radio.Button value={0.68}>32%</Radio.Button>
           </Radio.Group>
-        </Form.Item>
-        <Button type="primary" htmlType="submit">
-          Oblicz
-        </Button>
+        </FormItem>
+        <SubmitButton />
       </Form>
     </>
   )

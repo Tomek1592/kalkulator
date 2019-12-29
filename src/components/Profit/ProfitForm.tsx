@@ -1,8 +1,10 @@
 import React, { FC, useState } from 'react';
-import { Checkbox, Drawer, Form, InputNumber, Button, Radio } from 'antd';
+import { Checkbox, Drawer, Form, InputNumber, Radio } from 'antd';
+import { faCut, faWallet, faGopuram } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
-import SummaryCard from './SummaryCard';
+import SummaryCard from '../Common/SummaryCard';
+import SubmitButton from "../Common/SubmitButton";
 
 const FormItem = styled(Form.Item)`
   border: 1px solid #e8e8e8;
@@ -12,17 +14,6 @@ const FormItem = styled(Form.Item)`
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
 `;
 
-const CustomButton = styled(Button)`
-  width: 100%;
-  height: 50px !important;
-  
-  span {
-    font-size: 20px;
-  }
-`;
-
-
-// ((8000 - 213,57)*17%)-294,76
 const INSURANCE = {
   OLDAGE: 131.76,  // emerytalne
   PENSION: 54,     // rentowe
@@ -98,7 +89,31 @@ const ProfitForm: FC = () => {
         onClose={() => setResultDrawer(false)}
         visible={resultDrawer}
       >
-        <SummaryCard total={total} />
+        <SummaryCard
+          data={[
+            {
+              id: 'clean-income',
+              label: 'Kwota na rękę',
+              value: total.cleanIncome,
+              color: '#36A2EB',
+              icon: faWallet
+            },
+            {
+              id: 'pit-36',
+              label: 'Podatek dochodowy',
+              value: total.pit36,
+              color: '#FF6384',
+              icon: faCut
+            },
+            {
+              id: 'zus',
+              label: 'Składka ZUS',
+              value: total.ZUS,
+              color: '#FFCE56',
+              icon: faGopuram
+            }
+          ]}
+        />
       </Drawer>
       <Form onSubmit={submitForm}>
         <FormItem label="Kwota netto" extra="Podaj kwotę netto na fakturze">
@@ -144,9 +159,7 @@ const ProfitForm: FC = () => {
             Opłacam składkę chorobową
           </Checkbox>
         </FormItem>
-        <CustomButton type="primary" htmlType="submit">
-          Oblicz
-        </CustomButton>
+        <SubmitButton />
       </Form>
     </>
   )

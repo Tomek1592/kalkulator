@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import Savings from './Savings/Savings';
 import Profit from './Profit/Profit';
-import CustomMenu from './CustomMenu';
+import CustomMenu from './Common/CustomMenu';
 
 import '../css/App.css';
 
