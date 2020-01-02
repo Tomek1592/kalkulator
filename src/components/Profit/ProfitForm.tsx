@@ -37,7 +37,7 @@ const ProfitForm: FC = () => {
     { id: 'zus-type-3', value: ZUS_RATES.LEVEL2, description: 'Normalny ZUS' }
   ];
 
-  const [income, setIncome] = useState(8000);
+  const [income, setIncome] = useState(0);
   const [incomeTax, setIncomeTax] = useState(defaultIncomeTax);
   const [ZUS, setZUS] = useState(defaultZUS);
   const [total, setTotal] = useState({ pit36: 0,  cleanIncome: 0,  ZUS: 0 });
