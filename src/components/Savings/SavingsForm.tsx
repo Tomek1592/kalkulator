@@ -1,16 +1,12 @@
 import React, { FC, useState } from 'react';
-import { isMobile } from 'react-device-detect';
 
 import { faCut, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { Form, InputNumber, Radio, Drawer } from 'antd';
 import styled from 'styled-components';
 
+import { DEFAULT_VAT, DEFAULT_INCOME_TAX } from '../../constants/defaults';
 import SummaryCard from '../Common/SummaryCard';
 import SubmitButton from '../Common/SubmitButton';
-
-interface FormProps {
-  width?: string;
-}
 
 const FormItem = styled(Form.Item)`
   border: 1px solid #e8e8e8;
@@ -18,13 +14,12 @@ const FormItem = styled(Form.Item)`
   margin-bottom: 10px !important;
   border-radius: 3px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
-  width: ${(props: FormProps) => (props.width ? props.width : '100%')};
 `;
 
 const SavingsForm: FC = () => {
-  const [itemPrice, setItemPrice] = useState(0);
-  const [vat, setVat] = useState(1.23);
-  const [incomeTax, setIncomeTax] = useState(0.82);
+  const [itemPrice, setItemPrice] = useState(100);
+  const [vat, setVat] = useState(DEFAULT_VAT);
+  const [incomeTax, setIncomeTax] = useState(DEFAULT_INCOME_TAX);
   const [total, setTotal] = useState({
     incomeTaxSavings: 0,
     vatSavings: 0,
@@ -34,7 +29,6 @@ const SavingsForm: FC = () => {
   const [resultDrawer, setResultDrawer] = useState(false);
 
   const inputStyle = { width: '100%' };
-  const formInputWidth = isMobile ? '100%' : '40%';
   const summaryCardData = [
     {
       id: 'income-tax-savings',
@@ -81,11 +75,10 @@ const SavingsForm: FC = () => {
   const submitForm = (e: any) => {
     setTotal({ incomeTaxSavings: 0, vatSavings: 0, totalSavings: 0, total: 0 });
 
-    const withoutVat = vat > 0 ? itemPrice / vat : 0;
-    const incomeTaxSavings = itemPrice - itemPrice * incomeTax;
-    const vatSavings = itemPrice - withoutVat;
-    const total = vat > 0 ? withoutVat * incomeTax : itemPrice * incomeTax;
-    const totalSavings = itemPrice - total;
+    const vatSavings = itemPrice * vat;
+    const incomeTaxSavings = itemPrice * incomeTax;
+    const totalSavings = vatSavings + incomeTaxSavings;
+    const total = itemPrice - totalSavings;
 
     setResultDrawer(false);
     setTotal({
@@ -109,11 +102,7 @@ const SavingsForm: FC = () => {
       </Drawer>
 
       <Form onFinish={submitForm}>
-        <FormItem
-          label="Kwota brutto"
-          extra="Podaj kwotę brutto produktu"
-          width={formInputWidth}
-        >
+        <FormItem label="Kwota brutto" extra="Podaj kwotę brutto produktu">
           <InputNumber
             value={itemPrice}
             defaultValue={0}
@@ -124,37 +113,32 @@ const SavingsForm: FC = () => {
           />
         </FormItem>
 
-        <FormItem
-          label="Stawka VAT"
-          extra="Podaj stawkę podatku VAT"
-          width={formInputWidth}
-        >
+        <FormItem label="Stawka VAT" extra="Podaj stawkę podatku VAT">
           <Radio.Group
-            defaultValue={1.23}
+            defaultValue={DEFAULT_VAT}
             style={inputStyle}
             onChange={e => handleChangeVat(e)}
             buttonStyle="solid"
           >
             <Radio.Button value={0}>0%</Radio.Button>
-            <Radio.Button value={1.08}>8%</Radio.Button>
-            <Radio.Button value={1.23}>23%</Radio.Button>
+            <Radio.Button value={0.08}>8%</Radio.Button>
+            <Radio.Button value={0.23}>23%</Radio.Button>
           </Radio.Group>
         </FormItem>
 
         <FormItem
           label="Podatek dochodowy"
           extra="Podaj stawkę podatku dochodowego"
-          width={formInputWidth}
         >
           <Radio.Group
-            defaultValue={0.83}
+            defaultValue={DEFAULT_INCOME_TAX}
             style={inputStyle}
             onChange={e => handleChangeIncome(e)}
             buttonStyle="solid"
           >
-            <Radio.Button value={0.83}>17%</Radio.Button>
-            <Radio.Button value={0.81}>19%</Radio.Button>
-            <Radio.Button value={0.68}>32%</Radio.Button>
+            <Radio.Button value={0.17}>17%</Radio.Button>
+            <Radio.Button value={0.19}>19%</Radio.Button>
+            <Radio.Button value={0.32}>32%</Radio.Button>
           </Radio.Group>
         </FormItem>
 

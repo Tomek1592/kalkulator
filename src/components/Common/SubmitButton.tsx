@@ -1,17 +1,13 @@
 import React, { FC } from 'react';
-import { isMobile } from 'react-device-detect';
 
+import { Row, Col } from 'antd';
 import styled from 'styled-components';
 
 import { Button } from 'antd';
 
-interface FormProps {
-  width?: string;
-}
-
 const CustomButton = styled(Button)`
-  height: 50px !important;
-  width: ${(props: FormProps) => (props.width ? props.width : '100%')};
+  height: 45px !important;
+  width: 100%;
 
   span {
     font-size: 20px;
@@ -20,13 +16,13 @@ const CustomButton = styled(Button)`
 
 const SubmitButton: FC = () => {
   return (
-    <CustomButton
-      type="primary"
-      htmlType="submit"
-      width={isMobile ? '100%' : '10%'}
-    >
-      Oblicz
-    </CustomButton>
+    <Row align="middle" justify="center">
+      <Col xs={24} sm={20} md={16} lg={12} xl={8} xxl={8}>
+        <CustomButton type="primary" htmlType="submit">
+          Oblicz
+        </CustomButton>
+      </Col>
+    </Row>
   );
 };
 

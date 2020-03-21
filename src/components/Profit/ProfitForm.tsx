@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react';
-import { isMobile } from 'react-device-detect';
 
 import { faCut, faWallet, faGopuram } from '@fortawesome/free-solid-svg-icons';
 import { Checkbox, Drawer, Form, InputNumber, Radio } from 'antd';
@@ -13,17 +12,12 @@ import {
 import SummaryCard from '../Common/SummaryCard';
 import SubmitButton from '../Common/SubmitButton';
 
-interface FormProps {
-  width?: string;
-}
-
 const FormItem = styled(Form.Item)`
   border: 1px solid #e8e8e8;
   padding: 10px !important;
   margin-bottom: 10px !important;
   border-radius: 3px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
-  width: ${(props: FormProps) => (props.width ? props.width : '100%')};
 `;
 
 const ProfitForm: FC = () => {
@@ -35,7 +29,6 @@ const ProfitForm: FC = () => {
   const [resultDrawer, setResultDrawer] = useState(false);
 
   const inputStyle = { width: '100%' };
-  const formInputWidth = isMobile ? '100%' : '40%';
   const ZUStypes = [
     { id: 'zus-type-1', value: ZUS_RATES.LEVEL0, description: 'Ulga na start' },
     { id: 'zus-type-2', value: ZUS_RATES.LEVEL1, description: 'Mały ZUS' },
@@ -116,12 +109,8 @@ const ProfitForm: FC = () => {
         <SummaryCard data={summaryCardData} />
       </Drawer>
 
-      <Form onFinish={submitForm}>
-        <FormItem
-          label="Kwota netto"
-          extra="Podaj kwotę netto na fakturze"
-          width={formInputWidth}
-        >
+      <Form layout="vertical" onFinish={submitForm}>
+        <FormItem label="Kwota netto" extra="Podaj kwotę netto na fakturze">
           <InputNumber
             value={income}
             min={0}
@@ -134,7 +123,6 @@ const ProfitForm: FC = () => {
         <FormItem
           label="Podatek dochodowy"
           extra="Podaj stawkę podatku dochodowego"
-          width={formInputWidth}
         >
           <Radio.Group
             defaultValue={DEFAULT_INCOME_TAX}
@@ -148,11 +136,7 @@ const ProfitForm: FC = () => {
           </Radio.Group>
         </FormItem>
 
-        <FormItem
-          label="Składki ZUS"
-          extra="Jaką składkę ZUS opłacasz"
-          width={formInputWidth}
-        >
+        <FormItem label="Składki ZUS" extra="Jaką składkę ZUS opłacasz">
           <Radio.Group
             defaultValue={ZUS_RATES.LEVEL1}
             style={inputStyle}
@@ -167,7 +151,7 @@ const ProfitForm: FC = () => {
           </Radio.Group>
         </FormItem>
 
-        <FormItem help="Czy opłacasz stawkę chorobową?" width={formInputWidth}>
+        <FormItem help="Czy opłacasz stawkę chorobową?">
           <Checkbox
             defaultChecked={sickInsurance}
             onChange={handleChangeSickInsurance}
