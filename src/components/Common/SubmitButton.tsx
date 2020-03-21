@@ -1,11 +1,18 @@
-import React, { FC } from "react";
-import styled from "styled-components";
-import { Button } from "antd";
+import React, { FC } from 'react';
+import { isMobile } from 'react-device-detect';
+
+import styled from 'styled-components';
+
+import { Button } from 'antd';
+
+interface FormProps {
+  width?: string;
+}
 
 const CustomButton = styled(Button)`
-  width: 100%;
   height: 50px !important;
-  
+  width: ${(props: FormProps) => (props.width ? props.width : '100%')};
+
   span {
     font-size: 20px;
   }
@@ -13,10 +20,14 @@ const CustomButton = styled(Button)`
 
 const SubmitButton: FC = () => {
   return (
-    <CustomButton type="primary" htmlType="submit">
+    <CustomButton
+      type="primary"
+      htmlType="submit"
+      width={isMobile ? '100%' : '10%'}
+    >
       Oblicz
     </CustomButton>
-  )
+  );
 };
 
 export default SubmitButton;

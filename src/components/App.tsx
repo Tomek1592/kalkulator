@@ -1,8 +1,9 @@
 import React, { useState, FC } from 'react';
-import { BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { Button } from 'antd';
 import styled from 'styled-components';
+import { BarsOutlined } from '@ant-design/icons';
 
 import Savings from './Savings/Savings';
 import Profit from './Profit/Profit';
@@ -33,7 +34,7 @@ const App: FC = () => {
     <Router>
       <AppWrapper>
         <Header>
-          <Button icon="menu" onClick={() => setVisible(true)} />
+          <Button icon={<BarsOutlined />} onClick={() => setVisible(true)} />
         </Header>
         <Content>
           <Switch>

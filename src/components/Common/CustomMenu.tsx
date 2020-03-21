@@ -1,11 +1,15 @@
-import React, { FC } from "react";
-import { useHistory } from "react-router-dom";
+import React, { FC } from 'react';
+import { useHistory } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPiggyBank, faHandHoldingUsd } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPiggyBank,
+  faHandHoldingUsd
+} from '@fortawesome/free-solid-svg-icons';
 
-import { Drawer } from "antd";
-import styled from "styled-components";
+import { Drawer } from 'antd';
+import styled from 'styled-components';
 
 const CustomDrawer = styled(Drawer)`
   ul {
@@ -26,9 +30,9 @@ const MenuTile = styled('div')`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
-  
+
   &:hover {
     cursor: pointer;
     box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
@@ -39,7 +43,7 @@ const IconWrapper = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
-  
+
   span {
     font-size: 20px;
     margin-top: 5px;
@@ -52,6 +56,8 @@ interface CustomMenuProps {
 }
 
 const CustomMenu: FC<CustomMenuProps> = ({ visible, setVisible }) => {
+  const history = useHistory();
+
   const menuItems = [
     {
       id: 'menu-item-1',
@@ -69,8 +75,6 @@ const CustomMenu: FC<CustomMenuProps> = ({ visible, setVisible }) => {
     }
   ];
 
-  const history = useHistory();
-
   const handleOpenItem = (path: string) => {
     setVisible(false);
     history.push(path);
@@ -80,7 +84,7 @@ const CustomMenu: FC<CustomMenuProps> = ({ visible, setVisible }) => {
     <CustomDrawer
       title="Menu"
       placement="left"
-      width="100%"
+      width={isMobile ? '100%' : '30%'}
       onClose={() => setVisible(false)}
       visible={visible}
     >
@@ -97,7 +101,7 @@ const CustomMenu: FC<CustomMenuProps> = ({ visible, setVisible }) => {
         ))}
       </ul>
     </CustomDrawer>
-  )
+  );
 };
 
 export default CustomMenu;
