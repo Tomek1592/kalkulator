@@ -125,7 +125,7 @@ const ProfitForm: FC = () => {
       basicInsurance += INSURANCE.SICK;
     }
 
-    if (period === '2') {
+    if (period === 'hour') {
       finalIncome *= hours;
     }
 
@@ -134,7 +134,7 @@ const ProfitForm: FC = () => {
 
     setResultDrawer(false);
     setTotal({
-      pit36: Math.round(pit36),
+      pit36: Math.round(pit36) < 0 ? 0 : Math.round(pit36),
       cleanIncome: Math.round(finalIncome - pit36 - totalZUS),
       ZUS: Math.round(totalZUS)
     });
