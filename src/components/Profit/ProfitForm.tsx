@@ -30,12 +30,24 @@ const FormItem = styled(Form.Item)`
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
 `;
 
+const PeriodRadioGroup = styled(Radio.Group)`
+  && {
+    margin-bottom: 10px;
+    width: 100%;
+
+    label {
+      width: 50%;
+      text-align: center;
+    }
+  }
+`;
+
 const ProfitForm: FC = () => {
   const [income, setIncome] = useState(0);
   const [incomeTax, setIncomeTax] = useState(DEFAULT_INCOME_TAX);
   const [ZUS, setZUS] = useState(ZUS_RATES.LEVEL1);
   const [total, setTotal] = useState({ pit36: 0, cleanIncome: 0, ZUS: 0 });
-  const [period, setPeriod] = useState('1');
+  const [period, setPeriod] = useState('month');
   const [hours, setHours] = useState(168);
   const [sickInsurance, setSickInsurance] = useState(true);
   const [resultDrawer, setResultDrawer] = useState(false);
@@ -86,9 +98,9 @@ const ProfitForm: FC = () => {
     setSickInsurance(!sickInsurance);
   };
 
-  const handleChangePeriod = (value: any) => {
+  const handleChangePeriod = (e: any) => {
     setIncome(0);
-    setPeriod(value);
+    setPeriod(e.target.value);
   };
 
   const handleChangeHours = (value: any) => {
@@ -141,63 +153,51 @@ const ProfitForm: FC = () => {
       </Drawer>
 
       <Form layout="vertical" onFinish={submitForm}>
-        <Tabs defaultActiveKey="1" onChange={handleChangePeriod}>
-          <Tabs.TabPane
-            tab={
-              <span>
-                <CalendarOutlined />
-                Miesiąc
-              </span>
-            }
-            key="1"
-          >
-            <FormItem label="Kwota netto" extra="Podaj kwotę netto na fakturze">
-              <InputNumber
-                value={income}
-                min={0}
-                max={1000000}
-                style={inputStyle}
-                formatter={value => moneyFormatter(value)}
-                onChange={handleChangeIncome}
-              />
-            </FormItem>
-          </Tabs.TabPane>
-          <Tabs.TabPane
-            tab={
-              <span>
-                <FieldTimeOutlined />
-                Godzina
-              </span>
-            }
-            key="2"
-          >
-            <Row gutter={6}>
-              <Col span={12}>
-                <FormItem label="Kwota netto" extra="Kwota netto na godzinę">
-                  <InputNumber
-                    value={income}
-                    min={0}
-                    max={500}
-                    style={inputStyle}
-                    formatter={value => moneyFormatter(value)}
-                    onChange={handleChangeIncome}
-                  />
-                </FormItem>
-              </Col>
-              <Col span={12}>
-                <FormItem label="Liczba godzin" extra="Ilość godzin roboczych">
-                  <InputNumber
-                    value={hours}
-                    min={0}
-                    max={300}
-                    style={inputStyle}
-                    onChange={handleChangeHours}
-                  />
-                </FormItem>
-              </Col>
-            </Row>
-          </Tabs.TabPane>
-        </Tabs>
+        <PeriodRadioGroup onChange={handleChangePeriod} defaultValue="month">
+          <Radio.Button value="month">Miesiąc</Radio.Button>
+          <Radio.Button value="hour">Godzina</Radio.Button>
+        </PeriodRadioGroup>
+
+        {period === 'month' && (
+          <FormItem label="Kwota netto" extra="Podaj kwotę netto na fakturze">
+            <InputNumber
+              value={income}
+              min={0}
+              max={1000000}
+              style={inputStyle}
+              formatter={value => moneyFormatter(value)}
+              onChange={handleChangeIncome}
+            />
+          </FormItem>
+        )}
+
+        {period === 'hour' && (
+          <Row gutter={6}>
+            <Col span={12}>
+              <FormItem label="Kwota netto" extra="Kwota netto na godzinę">
+                <InputNumber
+                  value={income}
+                  min={0}
+                  max={500}
+                  style={inputStyle}
+                  formatter={value => moneyFormatter(value)}
+                  onChange={handleChangeIncome}
+                />
+              </FormItem>
+            </Col>
+            <Col span={12}>
+              <FormItem label="Liczba godzin" extra="Ilość godzin roboczych">
+                <InputNumber
+                  value={hours}
+                  min={0}
+                  max={300}
+                  style={inputStyle}
+                  onChange={handleChangeHours}
+                />
+              </FormItem>
+            </Col>
+          </Row>
+        )}
 
         <FormItem
           label="Podatek dochodowy"
