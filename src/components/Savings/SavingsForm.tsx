@@ -17,7 +17,7 @@ const FormItem = styled(Form.Item)`
 `;
 
 const SavingsForm: FC = () => {
-  const [itemPrice, setItemPrice] = useState(100);
+  const [itemPrice, setItemPrice] = useState(0);
   const [vat, setVat] = useState(DEFAULT_VAT);
   const [incomeTax, setIncomeTax] = useState(DEFAULT_INCOME_TAX);
   const [total, setTotal] = useState({
@@ -72,6 +72,10 @@ const SavingsForm: FC = () => {
     setIncomeTax(e.target.value);
   };
 
+  const moneyFormatter = (value: any) => {
+    return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
   const submitForm = (e: any) => {
     setTotal({ incomeTaxSavings: 0, vatSavings: 0, totalSavings: 0, total: 0 });
 
@@ -109,6 +113,7 @@ const SavingsForm: FC = () => {
             min={0}
             max={10000}
             style={inputStyle}
+            formatter={value => moneyFormatter(value)}
             onChange={handleChangePrice}
           />
         </FormItem>

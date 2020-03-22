@@ -1,7 +1,9 @@
-import React from "react";
+import React from 'react';
+import { Doughnut } from 'react-chartjs-2';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { Doughnut } from "react-chartjs-2";
+
 import styled from 'styled-components';
 
 const SummaryCardWrapper = styled('div')`
@@ -17,7 +19,7 @@ const DoughnutWrapper = styled('div')`
 const ResultWrapper = styled('div')`
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 115px 115px; 
+  grid-template-rows: 115px 115px;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
 `;
@@ -61,21 +63,23 @@ const LabelText = styled('span')`
 
 interface SummaryCardProps {
   data: {
-    id: string,
-    label: string,
-    value: number,
-    color: string,
-    icon: IconDefinition
-  }[]
+    id: string;
+    label: string;
+    value: number;
+    color: string;
+    icon: IconDefinition;
+  }[];
 }
 
 const SummaryCard: React.FC<SummaryCardProps> = ({ data }) => {
   const chartData = {
-    datasets: [{
-      labels: data.map(el => el.label),
-      data: data.map(el => el.value),
-      backgroundColor: data.map(el => el.color)
-    }]
+    datasets: [
+      {
+        labels: data.map(el => el.label),
+        data: data.map(el => el.value),
+        backgroundColor: data.map(el => el.color)
+      }
+    ]
   };
 
   return (

@@ -1,9 +1,10 @@
 import React, { useState, FC } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import { BarsOutlined } from '@ant-design/icons';
+
 import { Button } from 'antd';
 import styled from 'styled-components';
-import { BarsOutlined } from '@ant-design/icons';
 
 import Savings from './Savings/Savings';
 import Profit from './Profit/Profit';

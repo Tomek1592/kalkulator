@@ -1,7 +1,17 @@
 import React, { FC, useState } from 'react';
 
+import { CalendarOutlined, FieldTimeOutlined } from '@ant-design/icons';
 import { faCut, faWallet, faGopuram } from '@fortawesome/free-solid-svg-icons';
-import { Checkbox, Drawer, Form, InputNumber, Radio } from 'antd';
+import {
+  Checkbox,
+  Col,
+  Drawer,
+  Form,
+  InputNumber,
+  Radio,
+  Row,
+  Tabs
+} from 'antd';
 import styled from 'styled-components';
 
 import {
@@ -25,6 +35,8 @@ const ProfitForm: FC = () => {
   const [incomeTax, setIncomeTax] = useState(DEFAULT_INCOME_TAX);
   const [ZUS, setZUS] = useState(ZUS_RATES.LEVEL1);
   const [total, setTotal] = useState({ pit36: 0, cleanIncome: 0, ZUS: 0 });
+  const [period, setPeriod] = useState('1');
+  const [hours, setHours] = useState(168);
   const [sickInsurance, setSickInsurance] = useState(true);
   const [resultDrawer, setResultDrawer] = useState(false);
 
@@ -74,10 +86,24 @@ const ProfitForm: FC = () => {
     setSickInsurance(!sickInsurance);
   };
 
+  const handleChangePeriod = (value: any) => {
+    setIncome(0);
+    setPeriod(value);
+  };
+
+  const handleChangeHours = (value: any) => {
+    setHours(value);
+  };
+
+  const moneyFormatter = (value: any) => {
+    return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
   const submitForm = (e: any) => {
     setTotal({ pit36: 0, cleanIncome: 0, ZUS: 0 });
 
     const totalHealth = (INSURANCE.HEALTH * 0.0775) / 0.09;
+    let finalIncome = income;
     let basicInsurance =
       INSURANCE.OLDAGE + INSURANCE.PENSION + INSURANCE.ACCIDENT;
     let totalZUS = ZUS;
@@ -87,12 +113,17 @@ const ProfitForm: FC = () => {
       basicInsurance += INSURANCE.SICK;
     }
 
-    let pit36 = Math.round((income - basicInsurance) * incomeTax) - totalHealth;
+    if (period === '2') {
+      finalIncome *= hours;
+    }
+
+    let pit36 =
+      Math.round((finalIncome - basicInsurance) * incomeTax) - totalHealth;
 
     setResultDrawer(false);
     setTotal({
       pit36: Math.round(pit36),
-      cleanIncome: Math.round(income - pit36 - totalZUS),
+      cleanIncome: Math.round(finalIncome - pit36 - totalZUS),
       ZUS: Math.round(totalZUS)
     });
     setResultDrawer(true);
@@ -110,15 +141,63 @@ const ProfitForm: FC = () => {
       </Drawer>
 
       <Form layout="vertical" onFinish={submitForm}>
-        <FormItem label="Kwota netto" extra="Podaj kwotę netto na fakturze">
-          <InputNumber
-            value={income}
-            min={0}
-            max={1000000}
-            style={inputStyle}
-            onChange={handleChangeIncome}
-          />
-        </FormItem>
+        <Tabs defaultActiveKey="1" onChange={handleChangePeriod}>
+          <Tabs.TabPane
+            tab={
+              <span>
+                <CalendarOutlined />
+                Miesiąc
+              </span>
+            }
+            key="1"
+          >
+            <FormItem label="Kwota netto" extra="Podaj kwotę netto na fakturze">
+              <InputNumber
+                value={income}
+                min={0}
+                max={1000000}
+                style={inputStyle}
+                formatter={value => moneyFormatter(value)}
+                onChange={handleChangeIncome}
+              />
+            </FormItem>
+          </Tabs.TabPane>
+          <Tabs.TabPane
+            tab={
+              <span>
+                <FieldTimeOutlined />
+                Godzina
+              </span>
+            }
+            key="2"
+          >
+            <Row gutter={6}>
+              <Col span={12}>
+                <FormItem label="Kwota netto" extra="Kwota netto na godzinę">
+                  <InputNumber
+                    value={income}
+                    min={0}
+                    max={500}
+                    style={inputStyle}
+                    formatter={value => moneyFormatter(value)}
+                    onChange={handleChangeIncome}
+                  />
+                </FormItem>
+              </Col>
+              <Col span={12}>
+                <FormItem label="Liczba godzin" extra="Ilość godzin roboczych">
+                  <InputNumber
+                    value={hours}
+                    min={0}
+                    max={300}
+                    style={inputStyle}
+                    onChange={handleChangeHours}
+                  />
+                </FormItem>
+              </Col>
+            </Row>
+          </Tabs.TabPane>
+        </Tabs>
 
         <FormItem
           label="Podatek dochodowy"
