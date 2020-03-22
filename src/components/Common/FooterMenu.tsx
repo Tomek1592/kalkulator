@@ -11,7 +11,7 @@ import { Button } from 'antd';
 import styled from 'styled-components';
 
 interface MenuButtonProps {
-  isActive?: boolean;
+  active?: string;
 }
 
 const Footer = styled('div')`
@@ -32,7 +32,7 @@ const MenuButton = styled(Button)`
     font-size: 10px;
     align-items: center;
     color: ${(props: MenuButtonProps) =>
-      props.isActive ? '#1890ff' : '#7d7d7d'};
+      props.active === 'true' ? '#1890ff' : '#7d7d7d'};
   }
 `;
 
@@ -49,7 +49,7 @@ const FooterMenu: FC = () => {
     <Footer>
       <MenuButton
         type="link"
-        isActive={active === '/'}
+        active={(active === '/').toString()}
         onClick={() => handleOpenItem('/')}
       >
         <FontAwesomeIcon icon={faPiggyBank} size="2x" />
@@ -57,7 +57,7 @@ const FooterMenu: FC = () => {
       </MenuButton>
       <MenuButton
         type="link"
-        isActive={active === '/profit'}
+        active={(active === '/profit').toString()}
         onClick={() => handleOpenItem('/profit')}
       >
         <FontAwesomeIcon icon={faHandHoldingUsd} size="2x" />
