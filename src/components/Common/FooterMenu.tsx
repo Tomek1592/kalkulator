@@ -1,5 +1,5 @@
-import React, { FC, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { FC } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -37,32 +37,41 @@ const MenuButton = styled(Button)`
 `;
 
 const FooterMenu: FC = () => {
-  const [active, setActive] = useState('/');
   const history = useHistory();
+  const location = useLocation();
+
+  const menuItems = [
+    {
+      id: 'savings',
+      path: '/',
+      description: 'Oszczędności',
+      icon: faPiggyBank,
+    },
+    {
+      id: 'profit',
+      path: '/profit',
+      description: 'Zysk',
+      icon: faHandHoldingUsd,
+    },
+  ];
 
   const handleOpenItem = (path: string) => {
-    setActive(path);
     history.push(path);
   };
 
   return (
     <Footer>
-      <MenuButton
-        type="link"
-        active={(active === '/').toString()}
-        onClick={() => handleOpenItem('/')}
-      >
-        <FontAwesomeIcon icon={faPiggyBank} size="2x" />
-        <span>Oszczędności</span>
-      </MenuButton>
-      <MenuButton
-        type="link"
-        active={(active === '/profit').toString()}
-        onClick={() => handleOpenItem('/profit')}
-      >
-        <FontAwesomeIcon icon={faHandHoldingUsd} size="2x" />
-        <span>Zysk</span>
-      </MenuButton>
+      {menuItems.map((item) => (
+        <MenuButton
+          key={item.id}
+          type="link"
+          active={(location.pathname === item.path).toString()}
+          onClick={() => handleOpenItem(item.path)}
+        >
+          <FontAwesomeIcon icon={item.icon} size="2x" />
+          <span>{item.description}</span>
+        </MenuButton>
+      ))}
     </Footer>
   );
 };
