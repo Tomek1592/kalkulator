@@ -42,16 +42,16 @@ const FooterMenu: FC = () => {
 
   const menuItems = [
     {
-      id: 'savings',
-      path: '/',
-      description: 'Oszczędności',
-      icon: faPiggyBank,
-    },
-    {
       id: 'profit',
-      path: '/profit',
+      path: '/',
       description: 'Zysk',
       icon: faHandHoldingUsd,
+    },
+    {
+      id: 'savings',
+      path: '/savings',
+      description: 'Oszczędności',
+      icon: faPiggyBank,
     },
   ];
 
