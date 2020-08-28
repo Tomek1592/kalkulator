@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 
@@ -11,7 +11,8 @@ import {
 import { CustomMenuProps } from './types';
 import * as S from './styles';
 
-const CustomMenu: FC<CustomMenuProps> = ({ visible, setVisible }) => {
+const CustomMenu = (props: CustomMenuProps): JSX.Element => {
+  const { visible, setVisible } = props;
   const history = useHistory();
 
   const menuItems = [

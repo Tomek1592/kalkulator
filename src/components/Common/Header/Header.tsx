@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 import * as S from './styles';
 
-const Header: FC = () => {
+const Header = (): JSX.Element => {
   const location = useLocation();
 
   const titles = [

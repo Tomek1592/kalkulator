@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Savings from '../Savings/Savings';
@@ -9,7 +9,7 @@ import Header from '../Common/Header/Header';
 import * as S from './styles';
 import '../../css/App.css';
 
-const App: FC = () => {
+const App = (): JSX.Element => {
   return (
     <Router>
       <S.AppWrapper>
