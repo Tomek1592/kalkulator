@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 import { Row, Col } from 'antd';
 
-import ProfitForm from './ProfitForm';
+import ProfitForm from '../ProfitForm/ProfitForm';
 
 const Profit: FC = () => {
   return (

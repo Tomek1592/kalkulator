@@ -1,14 +1,7 @@
 import React, { FC } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import styled from 'styled-components';
-
-const HeaderWrapper = styled('div')`
-  width: 100%;
-  height: 50px;
-  background: #e8e8e8;
-  padding: 9px;
-`;
+import * as S from './styles';
 
 const Header: FC = () => {
   const location = useLocation();
@@ -26,7 +19,7 @@ const Header: FC = () => {
     return currentTitle[0].desc;
   };
 
-  return <HeaderWrapper>{getDesc(location.pathname)}</HeaderWrapper>;
+  return <S.HeaderWrapper>{getDesc(location.pathname)}</S.HeaderWrapper>;
 };
 
 export default Header;

@@ -2,19 +2,12 @@ import React, { FC, useState } from 'react';
 
 import { faCut, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { Form, InputNumber, Radio, Drawer } from 'antd';
-import styled from 'styled-components';
 
 import { DEFAULT_VAT, DEFAULT_INCOME_TAX } from '../../constants/defaults';
-import SummaryCard from '../Common/SummaryCard';
-import SubmitButton from '../Common/SubmitButton';
+import SummaryCard from '../Common/SummaryCard/SummaryCard';
+import SubmitButton from '../Common/SubmitButton/SubmitButton';
 
-const FormItem = styled(Form.Item)`
-  border: 1px solid #e8e8e8;
-  padding: 10px !important;
-  margin-bottom: 10px !important;
-  border-radius: 3px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
-`;
+import * as S from './styles';
 
 const SavingsForm: FC = () => {
   const [itemPrice, setItemPrice] = useState(0);
@@ -24,7 +17,7 @@ const SavingsForm: FC = () => {
     incomeTaxSavings: 0,
     vatSavings: 0,
     totalSavings: 0,
-    total: 0
+    total: 0,
   });
   const [resultDrawer, setResultDrawer] = useState(false);
 
@@ -35,29 +28,29 @@ const SavingsForm: FC = () => {
       label: 'Zaoszczędzone z Podatku dochodowego',
       value: total.incomeTaxSavings,
       color: '#36A2EB',
-      icon: faCut
+      icon: faCut,
     },
     {
       id: 'vat-savings',
       label: 'Zaoszczędzone z VAT',
       value: total.vatSavings,
       color: '#FFCE56',
-      icon: faCut
+      icon: faCut,
     },
     {
       id: 'total-savings',
       label: 'Łącznie zaoszczędzone',
       value: total.totalSavings,
       color: '#6ce865',
-      icon: faWallet
+      icon: faWallet,
     },
     {
       id: 'total',
       label: 'Łącznie do zapłacenia',
       value: total.total,
       color: '#FF6384',
-      icon: faCut
-    }
+      icon: faCut,
+    },
   ];
 
   const handleChangePrice = (value: any) => {
@@ -89,7 +82,7 @@ const SavingsForm: FC = () => {
       incomeTaxSavings: Math.round(incomeTaxSavings),
       vatSavings: Math.round(vatSavings),
       totalSavings: Math.round(totalSavings),
-      total: Math.round(total)
+      total: Math.round(total),
     });
     setResultDrawer(true);
   };
@@ -106,46 +99,46 @@ const SavingsForm: FC = () => {
       </Drawer>
 
       <Form onFinish={submitForm}>
-        <FormItem label="Kwota brutto" extra="Podaj kwotę brutto produktu">
+        <S.FormItem label="Kwota brutto" extra="Podaj kwotę brutto produktu">
           <InputNumber
             value={itemPrice}
             defaultValue={0}
             min={0}
             max={10000}
             style={inputStyle}
-            formatter={value => moneyFormatter(value)}
+            formatter={(value) => moneyFormatter(value)}
             onChange={handleChangePrice}
           />
-        </FormItem>
+        </S.FormItem>
 
-        <FormItem label="Stawka VAT" extra="Podaj stawkę podatku VAT">
+        <S.FormItem label="Stawka VAT" extra="Podaj stawkę podatku VAT">
           <Radio.Group
             defaultValue={DEFAULT_VAT}
             style={inputStyle}
-            onChange={e => handleChangeVat(e)}
+            onChange={(e) => handleChangeVat(e)}
             buttonStyle="solid"
           >
             <Radio.Button value={0}>0%</Radio.Button>
             <Radio.Button value={0.08}>8%</Radio.Button>
             <Radio.Button value={0.23}>23%</Radio.Button>
           </Radio.Group>
-        </FormItem>
+        </S.FormItem>
 
-        <FormItem
+        <S.FormItem
           label="Podatek dochodowy"
           extra="Podaj stawkę podatku dochodowego"
         >
           <Radio.Group
             defaultValue={DEFAULT_INCOME_TAX}
             style={inputStyle}
-            onChange={e => handleChangeIncome(e)}
+            onChange={(e) => handleChangeIncome(e)}
             buttonStyle="solid"
           >
             <Radio.Button value={0.17}>17%</Radio.Button>
             <Radio.Button value={0.19}>19%</Radio.Button>
             <Radio.Button value={0.32}>32%</Radio.Button>
           </Radio.Group>
-        </FormItem>
+        </S.FormItem>
 
         <SubmitButton />
       </Form>
