@@ -8,53 +8,8 @@ import {
   faHandHoldingUsd,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { Drawer } from 'antd';
-import styled from 'styled-components';
-
-const CustomDrawer = styled(Drawer)`
-  ul {
-    padding: 0;
-  }
-
-  li {
-    list-style: none;
-  }
-`;
-
-const MenuTile = styled('div')`
-  height: 200px;
-  width: 100%;
-  border: 1px solid #e8e8e8;
-  border-radius: 3px;
-  margin-bottom: 24px;
-  background: ${(props) => props.color};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
-
-  &:hover {
-    cursor: pointer;
-    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
-  }
-`;
-
-const IconWrapper = styled('div')`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  span {
-    font-size: 20px;
-    margin-top: 5px;
-  }
-`;
-
-interface CustomMenuProps {
-  visible: boolean;
-  setVisible: any;
-}
+import { CustomMenuProps } from './types';
+import * as S from './styles';
 
 const CustomMenu: FC<CustomMenuProps> = ({ visible, setVisible }) => {
   const history = useHistory();
@@ -82,7 +37,7 @@ const CustomMenu: FC<CustomMenuProps> = ({ visible, setVisible }) => {
   };
 
   return (
-    <CustomDrawer
+    <S.CustomDrawer
       title="Menu"
       placement="left"
       width={isMobile ? '100%' : '30%'}
@@ -92,16 +47,16 @@ const CustomMenu: FC<CustomMenuProps> = ({ visible, setVisible }) => {
       <ul>
         {menuItems.map((item) => (
           <li key={item.id} onClick={() => handleOpenItem(item.path)}>
-            <MenuTile color={item.color}>
-              <IconWrapper>
+            <S.MenuTile color={item.color}>
+              <S.IconWrapper>
                 <FontAwesomeIcon icon={item.icon} size="6x" />
                 <span>{item.description}</span>
-              </IconWrapper>
-            </MenuTile>
+              </S.IconWrapper>
+            </S.MenuTile>
           </li>
         ))}
       </ul>
-    </CustomDrawer>
+    </S.CustomDrawer>
   );
 };
 

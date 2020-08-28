@@ -2,45 +2,17 @@ import React, { FC, useState } from 'react';
 
 import { CalendarOutlined, FieldTimeOutlined } from '@ant-design/icons';
 import { faCut, faWallet, faGopuram } from '@fortawesome/free-solid-svg-icons';
-import {
-  Checkbox,
-  Col,
-  Drawer,
-  Form,
-  InputNumber,
-  Radio,
-  Row,
-  Tabs
-} from 'antd';
-import styled from 'styled-components';
+import { Checkbox, Col, Drawer, Form, InputNumber, Radio, Row } from 'antd';
 
 import {
   DEFAULT_INCOME_TAX,
   INSURANCE,
-  ZUS_RATES
+  ZUS_RATES,
 } from '../../constants/defaults';
-import SummaryCard from '../Common/SummaryCard';
-import SubmitButton from '../Common/SubmitButton';
+import SummaryCard from '../Common/SummaryCard/SummaryCard';
+import SubmitButton from '../Common/SubmitButton/SubmitButton';
 
-const FormItem = styled(Form.Item)`
-  border: 1px solid #e8e8e8;
-  padding: 10px !important;
-  margin-bottom: 10px !important;
-  border-radius: 3px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
-`;
-
-const PeriodRadioGroup = styled(Radio.Group)`
-  && {
-    margin-bottom: 10px;
-    width: 100%;
-
-    label {
-      width: 50%;
-      text-align: center;
-    }
-  }
-`;
+import * as S from './styles';
 
 const ProfitForm: FC = () => {
   const [income, setIncome] = useState(0);
@@ -56,7 +28,7 @@ const ProfitForm: FC = () => {
   const ZUStypes = [
     { id: 'zus-type-1', value: ZUS_RATES.LEVEL0, description: 'Ulga na start' },
     { id: 'zus-type-2', value: ZUS_RATES.LEVEL1, description: 'Mały ZUS' },
-    { id: 'zus-type-3', value: ZUS_RATES.LEVEL2, description: 'Normalny ZUS' }
+    { id: 'zus-type-3', value: ZUS_RATES.LEVEL2, description: 'Normalny ZUS' },
   ];
   const summaryCardData = [
     {
@@ -64,22 +36,22 @@ const ProfitForm: FC = () => {
       label: 'Kwota na rękę',
       value: total.cleanIncome,
       color: '#36A2EB',
-      icon: faWallet
+      icon: faWallet,
     },
     {
       id: 'pit-36',
       label: 'Podatek dochodowy',
       value: total.pit36,
       color: '#FF6384',
-      icon: faCut
+      icon: faCut,
     },
     {
       id: 'zus',
       label: 'Składka ZUS',
       value: total.ZUS,
       color: '#FFCE56',
-      icon: faGopuram
-    }
+      icon: faGopuram,
+    },
   ];
 
   const handleChangeIncome = (value: any) => {
@@ -136,7 +108,7 @@ const ProfitForm: FC = () => {
     setTotal({
       pit36: Math.round(pit36) < 0 ? 0 : Math.round(pit36),
       cleanIncome: Math.round(finalIncome - pit36 - totalZUS),
-      ZUS: Math.round(totalZUS)
+      ZUS: Math.round(totalZUS),
     });
     setResultDrawer(true);
   };
@@ -153,40 +125,40 @@ const ProfitForm: FC = () => {
       </Drawer>
 
       <Form layout="vertical" onFinish={submitForm}>
-        <PeriodRadioGroup onChange={handleChangePeriod} defaultValue="month">
+        <S.PeriodRadioGroup onChange={handleChangePeriod} defaultValue="month">
           <Radio.Button value="month">Miesiąc</Radio.Button>
           <Radio.Button value="hour">Godzina</Radio.Button>
-        </PeriodRadioGroup>
+        </S.PeriodRadioGroup>
 
         {period === 'month' && (
-          <FormItem label="Kwota netto" extra="Podaj kwotę netto na fakturze">
+          <S.FormItem label="Kwota netto" extra="Podaj kwotę netto na fakturze">
             <InputNumber
               value={income}
               min={0}
               max={1000000}
               style={inputStyle}
-              formatter={value => moneyFormatter(value)}
+              formatter={(value) => moneyFormatter(value)}
               onChange={handleChangeIncome}
             />
-          </FormItem>
+          </S.FormItem>
         )}
 
         {period === 'hour' && (
           <Row gutter={6}>
             <Col span={12}>
-              <FormItem label="Kwota netto" extra="Kwota netto na godzinę">
+              <S.FormItem label="Kwota netto" extra="Kwota netto na godzinę">
                 <InputNumber
                   value={income}
                   min={0}
                   max={500}
                   style={inputStyle}
-                  formatter={value => moneyFormatter(value)}
+                  formatter={(value) => moneyFormatter(value)}
                   onChange={handleChangeIncome}
                 />
-              </FormItem>
+              </S.FormItem>
             </Col>
             <Col span={12}>
-              <FormItem label="Liczba godzin" extra="Ilość godzin roboczych">
+              <S.FormItem label="Liczba godzin" extra="Ilość godzin roboczych">
                 <InputNumber
                   value={hours}
                   min={0}
@@ -194,50 +166,50 @@ const ProfitForm: FC = () => {
                   style={inputStyle}
                   onChange={handleChangeHours}
                 />
-              </FormItem>
+              </S.FormItem>
             </Col>
           </Row>
         )}
 
-        <FormItem
+        <S.FormItem
           label="Podatek dochodowy"
           extra="Podaj stawkę podatku dochodowego"
         >
           <Radio.Group
             defaultValue={DEFAULT_INCOME_TAX}
             style={inputStyle}
-            onChange={e => handleChangeIncomeTax(e)}
+            onChange={(e) => handleChangeIncomeTax(e)}
             buttonStyle="solid"
           >
             <Radio.Button value={0.17}>17%</Radio.Button>
             <Radio.Button value={0.19}>19%</Radio.Button>
             <Radio.Button value={0.32}>32%</Radio.Button>
           </Radio.Group>
-        </FormItem>
+        </S.FormItem>
 
-        <FormItem label="Składki ZUS" extra="Jaką składkę ZUS opłacasz">
+        <S.FormItem label="Składki ZUS" extra="Jaką składkę ZUS opłacasz">
           <Radio.Group
             defaultValue={ZUS_RATES.LEVEL1}
             style={inputStyle}
-            onChange={e => handleChangeZUS(e)}
+            onChange={(e) => handleChangeZUS(e)}
             buttonStyle="solid"
           >
-            {ZUStypes.map(type => (
+            {ZUStypes.map((type) => (
               <Radio.Button key={type.id} value={type.value}>
                 {type.description}
               </Radio.Button>
             ))}
           </Radio.Group>
-        </FormItem>
+        </S.FormItem>
 
-        <FormItem help="Czy opłacasz stawkę chorobową?">
+        <S.FormItem help="Czy opłacasz stawkę chorobową?">
           <Checkbox
             defaultChecked={sickInsurance}
             onChange={handleChangeSickInsurance}
           >
             Opłacam składkę chorobową
           </Checkbox>
-        </FormItem>
+        </S.FormItem>
 
         <SubmitButton />
       </Form>

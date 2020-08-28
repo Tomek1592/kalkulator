@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 import { Row, Col } from 'antd';
 
-import SavingsForm from './SavingsForm';
+import SavingsForm from '../SavingsForm/SavingsForm';
 
 const Savings: FC = () => {
   return (
