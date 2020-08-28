@@ -5,7 +5,7 @@ import { isMobile } from 'react-device-detect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPiggyBank,
-  faHandHoldingUsd
+  faHandHoldingUsd,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { Drawer } from 'antd';
@@ -15,6 +15,7 @@ const CustomDrawer = styled(Drawer)`
   ul {
     padding: 0;
   }
+
   li {
     list-style: none;
   }
@@ -26,7 +27,7 @@ const MenuTile = styled('div')`
   border: 1px solid #e8e8e8;
   border-radius: 3px;
   margin-bottom: 24px;
-  background: ${props => props.color};
+  background: ${(props) => props.color};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,15 +65,15 @@ const CustomMenu: FC<CustomMenuProps> = ({ visible, setVisible }) => {
       description: 'Ile zaoszczędzę',
       path: '/',
       color: '#7bdff2',
-      icon: faPiggyBank
+      icon: faPiggyBank,
     },
     {
       id: 'menu-item-2',
       description: 'Zysk z faktury',
       path: '/profit',
       color: '#b2f7ef',
-      icon: faHandHoldingUsd
-    }
+      icon: faHandHoldingUsd,
+    },
   ];
 
   const handleOpenItem = (path: string) => {
@@ -89,7 +90,7 @@ const CustomMenu: FC<CustomMenuProps> = ({ visible, setVisible }) => {
       visible={visible}
     >
       <ul>
-        {menuItems.map(item => (
+        {menuItems.map((item) => (
           <li key={item.id} onClick={() => handleOpenItem(item.path)}>
             <MenuTile color={item.color}>
               <IconWrapper>
