@@ -14,6 +14,8 @@ const Header = (): JSX.Element => {
   const getDesc = (path: string) => {
     const currentTitle = titles.filter((title) => {
       if (title.path === path) return title;
+
+      return undefined;
     });
 
     return currentTitle[0].desc;

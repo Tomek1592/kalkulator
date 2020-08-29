@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import { CalendarOutlined, FieldTimeOutlined } from '@ant-design/icons';
 import { faCut, faWallet, faGopuram } from '@fortawesome/free-solid-svg-icons';
 import { Checkbox, Col, Drawer, Form, InputNumber, Radio, Row } from 'antd';
 
