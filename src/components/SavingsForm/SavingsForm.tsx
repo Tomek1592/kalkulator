@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 
 import { faCut, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { Form, InputNumber, Radio, Drawer } from 'antd';
@@ -9,7 +9,7 @@ import SubmitButton from '../Common/SubmitButton/SubmitButton';
 
 import * as S from './styles';
 
-const SavingsForm: FC = () => {
+const SavingsForm = (): JSX.Element => {
   const [itemPrice, setItemPrice] = useState(0);
   const [vat, setVat] = useState(DEFAULT_VAT);
   const [incomeTax, setIncomeTax] = useState(DEFAULT_INCOME_TAX);

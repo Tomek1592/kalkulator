@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 
 import { CalendarOutlined, FieldTimeOutlined } from '@ant-design/icons';
 import { faCut, faWallet, faGopuram } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +14,7 @@ import SubmitButton from '../Common/SubmitButton/SubmitButton';
 
 import * as S from './styles';
 
-const ProfitForm: FC = () => {
+const ProfitForm = (): JSX.Element => {
   const [income, setIncome] = useState(0);
   const [incomeTax, setIncomeTax] = useState(DEFAULT_INCOME_TAX);
   const [ZUS, setZUS] = useState(ZUS_RATES.LEVEL1);

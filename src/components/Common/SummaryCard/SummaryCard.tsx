@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SummaryCardProps } from './types';
 import * as S from './styles';
 
-const SummaryCard: React.FC<SummaryCardProps> = ({ data }) => {
+const SummaryCard = (props: SummaryCardProps): JSX.Element => {
+  const { data } = props;
   const chartData = {
     datasets: [
       {

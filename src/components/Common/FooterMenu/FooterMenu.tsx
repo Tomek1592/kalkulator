@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,7 +9,7 @@ import {
 
 import * as S from './styles';
 
-const FooterMenu: FC = () => {
+const FooterMenu = (): JSX.Element => {
   const history = useHistory();
   const location = useLocation();
 
