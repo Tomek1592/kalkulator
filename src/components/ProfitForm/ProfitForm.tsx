@@ -8,8 +8,9 @@ import {
   INSURANCE,
   ZUS_RATES,
 } from '../../constants/defaults';
+
+import { Button } from '../Common/Button';
 import SummaryCard from '../Common/SummaryCard/SummaryCard';
-import SubmitButton from '../Common/SubmitButton/SubmitButton';
 
 import * as S from './styles';
 
@@ -210,7 +211,11 @@ const ProfitForm = (): JSX.Element => {
           </Checkbox>
         </S.FormItem>
 
-        <SubmitButton />
+        <Row align="middle" justify="center">
+          <Col xs={24} sm={20} md={16} lg={12} xl={8} xxl={8}>
+            <Button htmlType="submit" label="Oblicz" type="primary" />
+          </Col>
+        </Row>
       </Form>
     </>
   );
