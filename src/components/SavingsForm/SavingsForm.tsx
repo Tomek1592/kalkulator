@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 
 import { faCut, faWallet } from '@fortawesome/free-solid-svg-icons';
-import { Form, InputNumber, Radio, Drawer } from 'antd';
+import { Form, InputNumber, Radio, Drawer, Row, Col } from 'antd';
 
 import { DEFAULT_VAT, DEFAULT_INCOME_TAX } from '../../constants/defaults';
+
+import { Button } from '../Common/Button';
 import SummaryCard from '../Common/SummaryCard/SummaryCard';
-import SubmitButton from '../Common/SubmitButton/SubmitButton';
 
 import * as S from './styles';
 
@@ -140,7 +141,11 @@ const SavingsForm = (): JSX.Element => {
           </Radio.Group>
         </S.FormItem>
 
-        <SubmitButton />
+        <Row align="middle" justify="center">
+          <Col xs={24} sm={20} md={16} lg={12} xl={8} xxl={8}>
+            <Button type="primary" htmlType="submit" label="Oblicz" />
+          </Col>
+        </Row>
       </Form>
     </>
   );
