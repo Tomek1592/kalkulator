@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Savings from '../../pages/savings';
 import Profit from '../../pages/profit';
 
-import FooterMenu from '../common/FooterMenu';
+import FooterMenu from '../common/FooterMenu/FooterMenu';
 import Header from '../common/Header';
 
 import * as S from './styles';

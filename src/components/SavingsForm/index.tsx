@@ -5,7 +5,7 @@ import { Form, InputNumber, Radio, Drawer, Row, Col } from 'antd';
 
 import { DEFAULT_VAT, DEFAULT_INCOME_TAX } from '../../constants/defaults';
 
-import Button from '../common/Button';
+import Button from '../common/Button/Button';
 import SummaryCard from '../common/SummaryCard';
 
 import * as S from './styles';
