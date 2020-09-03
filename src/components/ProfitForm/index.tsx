@@ -1,4 +1,5 @@
 import * as React from 'react';
+import moment from 'moment-business-days';
 
 import { faCut, faWallet, faGopuram } from '@fortawesome/free-solid-svg-icons';
 import { Checkbox, Col, Drawer, Form, InputNumber, Radio, Row } from 'antd';
@@ -24,7 +25,7 @@ const ProfitForm = (): JSX.Element => {
     ZUS: 0,
   });
   const [period, setPeriod] = React.useState('month');
-  const [hours, setHours] = React.useState(168);
+  const [hours, setHours] = React.useState(0);
   const [sickInsurance, setSickInsurance] = React.useState(true);
   const [resultDrawer, setResultDrawer] = React.useState(false);
 
@@ -57,6 +58,14 @@ const ProfitForm = (): JSX.Element => {
       icon: faGopuram,
     },
   ];
+
+  React.useEffect(() => {
+    setHours(getMonthBusinessHours());
+  }, [hours]);
+
+  const getMonthBusinessHours = () => {
+    return moment().monthBusinessDays().length * 8;
+  };
 
   const handleChangeIncome = (value: any) => {
     setIncome(value);
