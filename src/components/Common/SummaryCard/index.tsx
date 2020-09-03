@@ -1,12 +1,12 @@
 import React from 'react';
-import { Doughnut } from 'react-chartjs-2';
 
+import { Doughnut } from 'react-chartjs-2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { SummaryCardProps } from './types';
+import { Props } from './types';
 import * as S from './styles';
 
-const SummaryCard = (props: SummaryCardProps): JSX.Element => {
+const SummaryCard = (props: Props): JSX.Element => {
   const { data } = props;
   const chartData = {
     datasets: [
@@ -44,4 +44,4 @@ const SummaryCard = (props: SummaryCardProps): JSX.Element => {
   );
 };
 
-export default SummaryCard;
+export { SummaryCard };

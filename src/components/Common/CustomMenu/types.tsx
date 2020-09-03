@@ -1,4 +1,4 @@
-export interface CustomMenuProps {
+export type Props = {
   visible: boolean;
   setVisible: any;
-}
+};

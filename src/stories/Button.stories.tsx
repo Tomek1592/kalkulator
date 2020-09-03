@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Button } from '../components/Common/Button';
-import { Props } from '../components/Common/Button/types';
+import { Button } from '../components/common/Button';
+import { Props } from '../components/common/Button/types';
 
 export default {
   title: 'Common/Button',
@@ -33,7 +33,7 @@ export default {
     size: {
       control: {
         type: 'inline-radio',
-        options: ['large', 'small'],
+        options: ['large', 'medium', 'small'],
       },
     },
   },
@@ -42,9 +42,9 @@ export default {
 export const Basic = (args: Props) => <Button {...args} />;
 Basic.args = {
   htmlType: 'submit',
-  label: 'Oblicz',
+  children: 'Oblicz',
   loading: false,
   type: 'primary',
   shape: undefined,
-  size: undefined,
+  size: 'medium',
 };

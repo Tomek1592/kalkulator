@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Card } from '../components/Common/Card';
-import { Props } from '../components/Common/Card/types';
+import { Card } from '../components/common/Card';
+import { Props } from '../components/common/Card/types';
 
 export default {
   title: 'Common/Card',

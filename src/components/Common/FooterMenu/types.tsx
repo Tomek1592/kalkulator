@@ -1,3 +1,3 @@
-export interface MenuButtonProps {
+export type Props = {
   active?: string;
-}
+};

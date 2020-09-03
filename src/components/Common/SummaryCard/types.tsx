@@ -1,6 +1,6 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
-export interface SummaryCardProps {
+export type Props = {
   data: {
     id: string;
     label: string;
@@ -8,4 +8,4 @@ export interface SummaryCardProps {
     color: string;
     icon: IconDefinition;
   }[];
-}
+};

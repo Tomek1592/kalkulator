@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -36,10 +36,11 @@ const FooterMenu = (): JSX.Element => {
     <S.Footer>
       {menuItems.map((item) => (
         <S.MenuButton
-          key={item.id}
-          type="link"
           active={(location.pathname === item.path).toString()}
+          htmlType="button"
+          key={item.id}
           onClick={() => handleOpenItem(item.path)}
+          type="link"
         >
           <FontAwesomeIcon icon={item.icon} size="2x" />
           <span>{item.description}</span>
@@ -49,4 +50,4 @@ const FooterMenu = (): JSX.Element => {
   );
 };
 
-export default FooterMenu;
+export { FooterMenu };

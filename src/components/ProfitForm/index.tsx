@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 
 import { faCut, faWallet, faGopuram } from '@fortawesome/free-solid-svg-icons';
 import { Checkbox, Col, Drawer, Form, InputNumber, Radio, Row } from 'antd';
@@ -9,20 +9,24 @@ import {
   ZUS_RATES,
 } from '../../constants/defaults';
 
-import { Button } from '../Common/Button';
-import SummaryCard from '../Common/SummaryCard/SummaryCard';
+import { Button } from '../common/Button';
+import { SummaryCard } from '../common/SummaryCard';
 
 import * as S from './styles';
 
 const ProfitForm = (): JSX.Element => {
-  const [income, setIncome] = useState(0);
-  const [incomeTax, setIncomeTax] = useState(DEFAULT_INCOME_TAX);
-  const [ZUS, setZUS] = useState(ZUS_RATES.LEVEL1);
-  const [total, setTotal] = useState({ pit36: 0, cleanIncome: 0, ZUS: 0 });
-  const [period, setPeriod] = useState('month');
-  const [hours, setHours] = useState(168);
-  const [sickInsurance, setSickInsurance] = useState(true);
-  const [resultDrawer, setResultDrawer] = useState(false);
+  const [income, setIncome] = React.useState(0);
+  const [incomeTax, setIncomeTax] = React.useState(DEFAULT_INCOME_TAX);
+  const [ZUS, setZUS] = React.useState(ZUS_RATES.LEVEL1);
+  const [total, setTotal] = React.useState({
+    pit36: 0,
+    cleanIncome: 0,
+    ZUS: 0,
+  });
+  const [period, setPeriod] = React.useState('month');
+  const [hours, setHours] = React.useState(168);
+  const [sickInsurance, setSickInsurance] = React.useState(true);
+  const [resultDrawer, setResultDrawer] = React.useState(false);
 
   const inputStyle = { width: '100%' };
   const ZUStypes = [
@@ -131,7 +135,7 @@ const ProfitForm = (): JSX.Element => {
         </S.PeriodRadioGroup>
 
         {period === 'month' && (
-          <S.FormItem label="Kwota netto" extra="Podaj kwotę netto na fakturze">
+          <S.FormItem label="Kwota netto" help="Podaj kwotę netto na fakturze">
             <InputNumber
               value={income}
               min={0}
@@ -146,7 +150,7 @@ const ProfitForm = (): JSX.Element => {
         {period === 'hour' && (
           <Row gutter={6}>
             <Col span={12}>
-              <S.FormItem label="Kwota netto" extra="Kwota netto na godzinę">
+              <S.FormItem label="Kwota netto" help="Kwota netto na godzinę">
                 <InputNumber
                   value={income}
                   min={0}
@@ -158,7 +162,7 @@ const ProfitForm = (): JSX.Element => {
               </S.FormItem>
             </Col>
             <Col span={12}>
-              <S.FormItem label="Liczba godzin" extra="Ilość godzin roboczych">
+              <S.FormItem label="Liczba godzin" help="Ilość godzin roboczych">
                 <InputNumber
                   value={hours}
                   min={0}
@@ -173,7 +177,7 @@ const ProfitForm = (): JSX.Element => {
 
         <S.FormItem
           label="Podatek dochodowy"
-          extra="Podaj stawkę podatku dochodowego"
+          help="Podaj stawkę podatku dochodowego"
         >
           <Radio.Group
             defaultValue={DEFAULT_INCOME_TAX}
@@ -187,7 +191,7 @@ const ProfitForm = (): JSX.Element => {
           </Radio.Group>
         </S.FormItem>
 
-        <S.FormItem label="Składki ZUS" extra="Jaką składkę ZUS opłacasz">
+        <S.FormItem label="Składki ZUS" help="Jaką składkę ZUS opłacasz">
           <Radio.Group
             defaultValue={ZUS_RATES.LEVEL1}
             style={inputStyle}
@@ -213,7 +217,9 @@ const ProfitForm = (): JSX.Element => {
 
         <Row align="middle" justify="center">
           <Col xs={24} sm={20} md={16} lg={12} xl={8} xxl={8}>
-            <Button htmlType="submit" label="Oblicz" type="primary" />
+            <Button block htmlType="submit" type="primary">
+              Oblicz
+            </Button>
           </Col>
         </Row>
       </Form>
@@ -221,4 +227,4 @@ const ProfitForm = (): JSX.Element => {
   );
 };
 
-export default ProfitForm;
+export { ProfitForm };

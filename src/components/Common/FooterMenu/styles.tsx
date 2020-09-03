@@ -1,26 +1,29 @@
 import styled from 'styled-components';
-import { Button } from 'antd';
+import { Button as AntdButton } from 'antd';
 
-import { MenuButtonProps } from './types';
+import { Props } from './types';
 
 export const Footer = styled.div`
   width: 100%;
   height: 50px;
-  background: #e8e8e8;
-  padding: 5px;
+
   position: fixed;
   bottom: 0;
+  padding: 5px;
+
   display: flex;
   justify-content: space-around;
+
+  background: #e8e8e8;
 `;
 
-export const MenuButton = styled(Button)`
+export const MenuButton = styled(AntdButton)`
   && {
     display: flex;
     flex-direction: column;
-    font-size: 10px;
     align-items: center;
-    color: ${(props: MenuButtonProps) =>
+    font-size: 10px;
+    color: ${(props: Props) =>
       props.active === 'true' ? '#1890ff' : '#7d7d7d'};
   }
 `;

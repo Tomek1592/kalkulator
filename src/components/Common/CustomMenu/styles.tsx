@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { Drawer } from 'antd';
+import { Drawer as AntdDrawer } from 'antd';
 
-export const CustomDrawer = styled(Drawer)`
+export const Drawer = styled(AntdDrawer)`
   ul {
     padding: 0;
   }

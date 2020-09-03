@@ -1,13 +1,14 @@
-import React from 'react';
+import * as React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Savings from '../Savings/Savings';
-import Profit from '../Profit/Profit';
-import FooterMenu from '../Common/FooterMenu/FooterMenu';
-import Header from '../Common/Header/Header';
+import { Savings } from '../pages/savings';
+import { Profit } from '../pages/profit';
+
+import { FooterMenu } from '../components/common/FooterMenu';
+import { Header } from '../components/common/Header';
 
 import * as S from './styles';
-import '../../css/App.css';
+import '../css/App.css';
 
 const App = (): JSX.Element => {
   return (
@@ -30,4 +31,4 @@ const App = (): JSX.Element => {
   );
 };
 
-export default App;
+export { App };

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import { Props } from './types';
 import * as S from './styles';
@@ -6,15 +6,21 @@ import * as S from './styles';
 const Button = (props: Props): JSX.Element => {
   const {
     block,
+    children,
     href,
     htmlType,
     icon,
-    label,
     loading,
+    onClick,
     shape,
     size,
     type,
   } = props;
+  const items: React.ReactNode[] = [];
+
+  function getChildren() {
+    return items.concat(children);
+  }
 
   return (
     <S.Button
@@ -23,11 +29,12 @@ const Button = (props: Props): JSX.Element => {
       htmlType={htmlType}
       icon={icon}
       loading={loading}
+      onClick={onClick}
       shape={shape}
       size={size}
       type={type}
     >
-      {label}
+      {children && getChildren().map((child) => !!child && child)}
     </S.Button>
   );
 };

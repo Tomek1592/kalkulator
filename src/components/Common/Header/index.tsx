@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
 import * as S from './styles';
@@ -21,7 +21,11 @@ const Header = (): JSX.Element => {
     return currentTitle[0].desc;
   };
 
-  return <S.HeaderWrapper>{getDesc(location.pathname)}</S.HeaderWrapper>;
+  return (
+    <S.HeaderWrapper>
+      <span>{getDesc(location.pathname)}</span>
+    </S.HeaderWrapper>
+  );
 };
 
-export default Header;
+export { Header };

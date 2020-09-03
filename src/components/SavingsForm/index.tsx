@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 
 import { faCut, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { Form, InputNumber, Radio, Drawer, Row, Col } from 'antd';
 
 import { DEFAULT_VAT, DEFAULT_INCOME_TAX } from '../../constants/defaults';
 
-import { Button } from '../Common/Button';
-import SummaryCard from '../Common/SummaryCard/SummaryCard';
+import { Button } from '../common/Button';
+import { SummaryCard } from '../common/SummaryCard';
 
 import * as S from './styles';
 
 const SavingsForm = (): JSX.Element => {
-  const [itemPrice, setItemPrice] = useState(0);
-  const [vat, setVat] = useState(DEFAULT_VAT);
-  const [incomeTax, setIncomeTax] = useState(DEFAULT_INCOME_TAX);
-  const [total, setTotal] = useState({
+  const [itemPrice, setItemPrice] = React.useState(0);
+  const [vat, setVat] = React.useState(DEFAULT_VAT);
+  const [incomeTax, setIncomeTax] = React.useState(DEFAULT_INCOME_TAX);
+  const [total, setTotal] = React.useState({
     incomeTaxSavings: 0,
     vatSavings: 0,
     totalSavings: 0,
     total: 0,
   });
-  const [resultDrawer, setResultDrawer] = useState(false);
+  const [resultDrawer, setResultDrawer] = React.useState(false);
 
   const inputStyle = { width: '100%' };
   const summaryCardData = [
@@ -100,7 +100,7 @@ const SavingsForm = (): JSX.Element => {
       </Drawer>
 
       <Form onFinish={submitForm}>
-        <S.FormItem label="Kwota brutto" extra="Podaj kwotę brutto produktu">
+        <S.FormItem label="Kwota brutto" help="Podaj kwotę brutto produktu">
           <InputNumber
             value={itemPrice}
             defaultValue={0}
@@ -112,7 +112,7 @@ const SavingsForm = (): JSX.Element => {
           />
         </S.FormItem>
 
-        <S.FormItem label="Stawka VAT" extra="Podaj stawkę podatku VAT">
+        <S.FormItem label="Stawka VAT" help="Podaj stawkę podatku VAT">
           <Radio.Group
             defaultValue={DEFAULT_VAT}
             style={inputStyle}
@@ -127,7 +127,7 @@ const SavingsForm = (): JSX.Element => {
 
         <S.FormItem
           label="Podatek dochodowy"
-          extra="Podaj stawkę podatku dochodowego"
+          help="Podaj stawkę podatku dochodowego"
         >
           <Radio.Group
             defaultValue={DEFAULT_INCOME_TAX}
@@ -143,7 +143,9 @@ const SavingsForm = (): JSX.Element => {
 
         <Row align="middle" justify="center">
           <Col xs={24} sm={20} md={16} lg={12} xl={8} xxl={8}>
-            <Button type="primary" htmlType="submit" label="Oblicz" />
+            <Button block htmlType="submit" type="primary">
+              Oblicz
+            </Button>
           </Col>
         </Row>
       </Form>
@@ -151,4 +153,4 @@ const SavingsForm = (): JSX.Element => {
   );
 };
 
-export default SavingsForm;
+export { SavingsForm };

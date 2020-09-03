@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 
@@ -8,10 +8,10 @@ import {
   faHandHoldingUsd,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { CustomMenuProps } from './types';
+import { Props } from './types';
 import * as S from './styles';
 
-const CustomMenu = (props: CustomMenuProps): JSX.Element => {
+const CustomMenu = (props: Props): JSX.Element => {
   const { visible, setVisible } = props;
   const history = useHistory();
 
@@ -38,7 +38,7 @@ const CustomMenu = (props: CustomMenuProps): JSX.Element => {
   };
 
   return (
-    <S.CustomDrawer
+    <S.Drawer
       title="Menu"
       placement="left"
       width={isMobile ? '100%' : '30%'}
@@ -57,8 +57,8 @@ const CustomMenu = (props: CustomMenuProps): JSX.Element => {
           </li>
         ))}
       </ul>
-    </S.CustomDrawer>
+    </S.Drawer>
   );
 };
 
-export default CustomMenu;
+export { CustomMenu };
