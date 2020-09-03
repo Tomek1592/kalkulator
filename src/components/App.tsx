@@ -8,7 +8,7 @@ import FooterMenu from './common/FooterMenu';
 import Header from './common/Header';
 
 import * as S from './styles';
-import '../../css/App.css';
+import '../css/App.css';
 
 const App = (): JSX.Element => {
   return (
