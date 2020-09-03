@@ -2676,6 +2676,13 @@
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
+"@types/moment-business@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@types/moment-business/-/moment-business-0.1.4.tgz#b8f1d6738930d497c7534a2822680fb547cbae11"
+  integrity sha512-jgzjlodKFPhLR5bXAwf4DUlleLyTZrDrVy7Jn/B/gx/Qeg/X+9hQwAqCYtdm2k/kuMM0u1CCy9Id6BYl+akpRQ==
+  dependencies:
+    moment "^2.18.0"
+
 "@types/node-fetch@^2.5.4":
   version "2.5.7"
   resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.5.7.tgz#20a2afffa882ab04d44ca786449a276f9f6bbf3c"
@@ -5165,6 +5172,13 @@ constants-browserify@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/constants-browserify/-/constants-browserify-1.0.0.tgz#c20b96d8c617748aaf1c16021760cd27fcb8cb75"
   integrity sha1-wguW2MYXdIqvHBYCF2DNJ/y4y3U=
+
+contained-periodic-values@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/contained-periodic-values/-/contained-periodic-values-1.0.0.tgz#a81dd8e84e0a5513d590a1e6581bfe55c00f9c4d"
+  integrity sha1-qB3Y6E4KVRPVkKHmWBv+VcAPnE0=
+  dependencies:
+    nearest-periodic-value "^1.0.0"
 
 contains-path@^0.1.0:
   version "0.1.0"
@@ -9881,7 +9895,20 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-moment@^2.10.2, moment@^2.24.0, moment@^2.25.3:
+moment-business-days@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/moment-business-days/-/moment-business-days-1.2.0.tgz#6172f9f38dbf443c2f859baabeabbd2935f63d65"
+  integrity sha512-QJlceLfMSxy/jZSOgJYCKeKw+qGYHj8W0jMa/fYruyoJ85+bJuLRiYv5DIaflyuRipmYRfD4kDlSwVYteLN+Jw==
+
+moment-business@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/moment-business/-/moment-business-3.0.1.tgz#df0de1a8a074060652b5688d3cc99c9d8b76dcc4"
+  integrity sha1-3w3hqKB0BgZStWiNPMmcnYt23MQ=
+  dependencies:
+    contained-periodic-values "^1.0.0"
+    skipped-periodic-values "^1.0.0"
+
+moment@^2.10.2, moment@^2.18.0, moment@^2.24.0, moment@^2.25.3, moment@^2.27.0:
   version "2.27.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
   integrity sha512-al0MUK7cpIcglMv3YF13qSgdAIqxHTO7brRtaz3DlSULbqfazqkc5kEjNrLDOM7fsjshoFIihnU8snrP7zUvhQ==
@@ -9957,6 +9984,11 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
+
+nearest-periodic-value@^1.0.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/nearest-periodic-value/-/nearest-periodic-value-1.2.0.tgz#a84fd52919a89692864d20a41468313d255905c6"
+  integrity sha1-qE/VKRmolpKGTSCkFGgxPSVZBcY=
 
 negotiator@0.6.2:
   version "0.6.2"
@@ -13313,6 +13345,13 @@ sisteransi@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-1.0.5.tgz#134d681297756437cc05ca01370d3a7a571075ed"
   integrity sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==
+
+skipped-periodic-values@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/skipped-periodic-values/-/skipped-periodic-values-1.0.1.tgz#d3a0a4d93ac134c4550db2a8823ed9d9739ceca2"
+  integrity sha1-06Ck2TrBNMRVDbKogj7Z2XOc7KI=
+  dependencies:
+    nearest-periodic-value "^1.0.0"
 
 slash@^1.0.0:
   version "1.0.0"
