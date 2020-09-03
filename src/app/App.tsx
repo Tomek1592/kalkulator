@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { Savings } from '../pages/savings';
-import { Profit } from '../pages/profit';
+import Savings from '../pages/savings';
+import Profit from '../pages/profit';
 
-// import FooterMenu from '../components/common/FooterMenu';
-// import { Header } from '../components/common/Header';
+import FooterMenu from '../components/common/FooterMenu';
+import Header from '../components/common/Header';
 
 import * as S from './styles';
 import '../css/App.css';
@@ -14,7 +14,7 @@ const App = (): JSX.Element => {
   return (
     <Router>
       <S.AppWrapper>
-        {/* <Header /> */}
+        <Header />
         <S.Content>
           <Switch>
             <Route exact path="/">
@@ -25,7 +25,7 @@ const App = (): JSX.Element => {
             </Route>
           </Switch>
         </S.Content>
-        {/* <FooterMenu /> */}
+        <FooterMenu />
       </S.AppWrapper>
     </Router>
   );

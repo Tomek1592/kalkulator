@@ -10,8 +10,8 @@ import {
   ZUS_RATES,
 } from '../../constants/defaults';
 
-import { Button } from '../common/Button';
-import { SummaryCard } from '../common/SummaryCard';
+import Button from '../common/Button';
+import SummaryCard from '../common/SummaryCard';
 
 import * as S from './styles';
 
@@ -236,4 +236,4 @@ const ProfitForm = (): JSX.Element => {
   );
 };
 
-export { ProfitForm };
+export default ProfitForm;

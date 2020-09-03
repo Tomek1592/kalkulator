@@ -39,4 +39,4 @@ const Button = (props: Props): JSX.Element => {
   );
 };
 
-export { Button };
+export default Button;

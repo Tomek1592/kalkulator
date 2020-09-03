@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Row, Col } from 'antd';
 
-import { SavingsForm } from '../components/SavingsForm';
+import SavingsForm from '../components/SavingsForm';
 
 const Savings = (): JSX.Element => {
   return (
@@ -14,4 +14,4 @@ const Savings = (): JSX.Element => {
   );
 };
 
-export { Savings };
+export default Savings;

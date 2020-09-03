@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card } from '../components/common/Card';
+import Card from '../components/common/Card';
 import { Props } from '../components/common/Card/types';
 
 export default {

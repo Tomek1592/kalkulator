@@ -61,4 +61,4 @@ const CustomMenu = (props: Props): JSX.Element => {
   );
 };
 
-export { CustomMenu };
+export default CustomMenu;

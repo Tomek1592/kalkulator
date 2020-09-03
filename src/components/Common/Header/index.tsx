@@ -28,4 +28,4 @@ const Header = (): JSX.Element => {
   );
 };
 
-export { Header };
+export default Header;

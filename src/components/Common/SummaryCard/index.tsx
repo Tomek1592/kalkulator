@@ -44,4 +44,4 @@ const SummaryCard = (props: Props): JSX.Element => {
   );
 };
 
-export { SummaryCard };
+export default SummaryCard;
