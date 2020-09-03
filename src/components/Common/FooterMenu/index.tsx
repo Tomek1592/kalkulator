@@ -50,4 +50,4 @@ const FooterMenu = (): JSX.Element => {
   );
 };
 
-export { FooterMenu };
+export default FooterMenu;
