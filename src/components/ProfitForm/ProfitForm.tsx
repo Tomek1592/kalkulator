@@ -11,7 +11,7 @@ import {
 } from '../../constants/defaults';
 
 import Button from '../common/Button/Button';
-import SummaryCard from '../common/SummaryCard';
+import SummaryCard from '../common/SummaryCard/SummaryCard';
 
 import * as S from './styles';
 

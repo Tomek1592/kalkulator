@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Row, Col } from 'antd';
 
-import ProfitForm from '../components/ProfitForm';
+import ProfitForm from '../components/ProfitForm/ProfitForm';
 
 const Profit = (): JSX.Element => {
   return (

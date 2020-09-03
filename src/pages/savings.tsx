@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Row, Col } from 'antd';
 
-import SavingsForm from '../components/SavingsForm';
+import SavingsForm from '../components/SavingsForm/SavingsForm';
 
 const Savings = (): JSX.Element => {
   return (

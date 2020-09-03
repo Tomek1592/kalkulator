@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Savings from '../../pages/savings';
-import Profit from '../../pages/profit';
+import Savings from '../pages/savings';
+import Profit from '../pages/profit';
 
-import FooterMenu from '../common/FooterMenu/FooterMenu';
-import Header from '../common/Header';
+import FooterMenu from '../components/common/FooterMenu/FooterMenu';
+import Header from '../components/common/Header/Header';
 
 import * as S from './styles';
-import '../../css/App.css';
 
 const App = (): JSX.Element => {
   return (
