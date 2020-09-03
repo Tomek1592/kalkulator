@@ -5,7 +5,7 @@ import { Savings } from '../pages/savings';
 import { Profit } from '../pages/profit';
 
 // import FooterMenu from '../components/common/FooterMenu';
-import { Header } from '../components/common/Header';
+// import { Header } from '../components/common/Header';
 
 import * as S from './styles';
 import '../css/App.css';
@@ -14,7 +14,7 @@ const App = (): JSX.Element => {
   return (
     <Router>
       <S.AppWrapper>
-        <Header />
+        {/* <Header /> */}
         <S.Content>
           <Switch>
             <Route exact path="/">
@@ -31,4 +31,4 @@ const App = (): JSX.Element => {
   );
 };
 
-export { App };
+export default App;
