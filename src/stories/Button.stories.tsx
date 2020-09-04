@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Button from '../components/common/Button/Button';
-import { Props } from '../components/common/Button/types';
+import Button from '../components/Common/Button/Button';
+import { Props } from '../components/Common/Button/types';
 
 export default {
   title: 'Common/Button',
