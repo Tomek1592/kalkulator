@@ -1,23 +1,13 @@
 import React, { FC, useState } from 'react';
 
-import { CalendarOutlined, FieldTimeOutlined } from '@ant-design/icons';
 import { faCut, faWallet, faGopuram } from '@fortawesome/free-solid-svg-icons';
-import {
-  Checkbox,
-  Col,
-  Drawer,
-  Form,
-  InputNumber,
-  Radio,
-  Row,
-  Tabs
-} from 'antd';
+import { Checkbox, Col, Drawer, Form, InputNumber, Radio, Row } from 'antd';
 import styled from 'styled-components';
 
 import {
   DEFAULT_INCOME_TAX,
   INSURANCE,
-  ZUS_RATES
+  ZUS_RATES,
 } from '../../constants/defaults';
 import SummaryCard from '../Common/SummaryCard';
 import SubmitButton from '../Common/SubmitButton';
@@ -56,7 +46,7 @@ const ProfitForm: FC = () => {
   const ZUStypes = [
     { id: 'zus-type-1', value: ZUS_RATES.LEVEL0, description: 'Ulga na start' },
     { id: 'zus-type-2', value: ZUS_RATES.LEVEL1, description: 'Mały ZUS' },
-    { id: 'zus-type-3', value: ZUS_RATES.LEVEL2, description: 'Normalny ZUS' }
+    { id: 'zus-type-3', value: ZUS_RATES.LEVEL2, description: 'Normalny ZUS' },
   ];
   const summaryCardData = [
     {
@@ -64,22 +54,22 @@ const ProfitForm: FC = () => {
       label: 'Kwota na rękę',
       value: total.cleanIncome,
       color: '#36A2EB',
-      icon: faWallet
+      icon: faWallet,
     },
     {
       id: 'pit-36',
       label: 'Podatek dochodowy',
       value: total.pit36,
       color: '#FF6384',
-      icon: faCut
+      icon: faCut,
     },
     {
       id: 'zus',
       label: 'Składka ZUS',
       value: total.ZUS,
       color: '#FFCE56',
-      icon: faGopuram
-    }
+      icon: faGopuram,
+    },
   ];
 
   const handleChangeIncome = (value: any) => {
@@ -136,7 +126,7 @@ const ProfitForm: FC = () => {
     setTotal({
       pit36: Math.round(pit36) < 0 ? 0 : Math.round(pit36),
       cleanIncome: Math.round(finalIncome - pit36 - totalZUS),
-      ZUS: Math.round(totalZUS)
+      ZUS: Math.round(totalZUS),
     });
     setResultDrawer(true);
   };
@@ -165,7 +155,7 @@ const ProfitForm: FC = () => {
               min={0}
               max={1000000}
               style={inputStyle}
-              formatter={value => moneyFormatter(value)}
+              formatter={(value) => moneyFormatter(value)}
               onChange={handleChangeIncome}
             />
           </FormItem>
@@ -180,7 +170,7 @@ const ProfitForm: FC = () => {
                   min={0}
                   max={500}
                   style={inputStyle}
-                  formatter={value => moneyFormatter(value)}
+                  formatter={(value) => moneyFormatter(value)}
                   onChange={handleChangeIncome}
                 />
               </FormItem>
@@ -206,7 +196,7 @@ const ProfitForm: FC = () => {
           <Radio.Group
             defaultValue={DEFAULT_INCOME_TAX}
             style={inputStyle}
-            onChange={e => handleChangeIncomeTax(e)}
+            onChange={(e) => handleChangeIncomeTax(e)}
             buttonStyle="solid"
           >
             <Radio.Button value={0.17}>17%</Radio.Button>
@@ -219,10 +209,10 @@ const ProfitForm: FC = () => {
           <Radio.Group
             defaultValue={ZUS_RATES.LEVEL1}
             style={inputStyle}
-            onChange={e => handleChangeZUS(e)}
+            onChange={(e) => handleChangeZUS(e)}
             buttonStyle="solid"
           >
-            {ZUStypes.map(type => (
+            {ZUStypes.map((type) => (
               <Radio.Button key={type.id} value={type.value}>
                 {type.description}
               </Radio.Button>
