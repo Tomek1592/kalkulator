@@ -4,6 +4,7 @@ import { faCut, faWallet, faGopuram } from '@fortawesome/free-solid-svg-icons';
 import { Checkbox, Col, Drawer, Form, InputNumber, Radio, Row } from 'antd';
 import styled from 'styled-components';
 
+import { saveToLocalStorage, getFromLocalStorage } from '../../helpers/localStorage'
 import {
   DEFAULT_INCOME_TAX,
   INSURANCE,
@@ -39,7 +40,7 @@ const ProfitForm: FC = () => {
   const [total, setTotal] = useState({ pit36: 0, cleanIncome: 0, ZUS: 0 });
   const [period, setPeriod] = useState('month');
   const [hours, setHours] = useState(168);
-  const [sickInsurance, setSickInsurance] = useState(true);
+  const [sickInsurance, setSickInsurance] = useState(false);
   const [resultDrawer, setResultDrawer] = useState(false);
 
   const inputStyle = { width: '100%' };
@@ -72,20 +73,35 @@ const ProfitForm: FC = () => {
     },
   ];
 
+  const getIncomeTax = (): number => {
+    return Number(getFromLocalStorage('income-tax')) || incomeTax;
+  }
+
+  const getZUS = (): number => {
+    return Number(getFromLocalStorage('zus')) || ZUS;
+  }
+
+  const getSickInsurance = () => {
+    return JSON.parse(getFromLocalStorage('sick-insurance')) || sickInsurance;
+  }
+
   const handleChangeIncome = (value: any) => {
     setIncome(value);
   };
 
   const handleChangeIncomeTax = (e: any) => {
     setIncomeTax(e.target.value);
+    saveToLocalStorage('income-tax', e.target.value);
   };
 
   const handleChangeZUS = (e: any) => {
     setZUS(e.target.value);
+    saveToLocalStorage('zus', e.target.value);
   };
 
   const handleChangeSickInsurance = () => {
     setSickInsurance(!sickInsurance);
+    saveToLocalStorage('sick-insurance', JSON.stringify(!sickInsurance));
   };
 
   const handleChangePeriod = (e: any) => {
@@ -194,7 +210,7 @@ const ProfitForm: FC = () => {
           extra="Podaj stawkę podatku dochodowego"
         >
           <Radio.Group
-            defaultValue={DEFAULT_INCOME_TAX}
+            defaultValue={getIncomeTax()}
             style={inputStyle}
             onChange={(e) => handleChangeIncomeTax(e)}
             buttonStyle="solid"
@@ -207,7 +223,7 @@ const ProfitForm: FC = () => {
 
         <FormItem label="Składki ZUS" extra="Jaką składkę ZUS opłacasz">
           <Radio.Group
-            defaultValue={ZUS_RATES.LEVEL1}
+            defaultValue={getZUS()}
             style={inputStyle}
             onChange={(e) => handleChangeZUS(e)}
             buttonStyle="solid"
@@ -222,7 +238,7 @@ const ProfitForm: FC = () => {
 
         <FormItem help="Czy opłacasz stawkę chorobową?">
           <Checkbox
-            defaultChecked={sickInsurance}
+            defaultChecked={getSickInsurance()}
             onChange={handleChangeSickInsurance}
           >
             Opłacam składkę chorobową
