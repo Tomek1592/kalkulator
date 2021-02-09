@@ -4,6 +4,7 @@ import { faCut, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { Form, InputNumber, Radio, Drawer } from 'antd';
 import styled from 'styled-components';
 
+import { saveToLocalStorage, getFromLocalStorage } from '../../helpers/localStorage'
 import { DEFAULT_VAT, DEFAULT_INCOME_TAX } from '../../constants/defaults';
 import SummaryCard from '../Common/SummaryCard';
 import SubmitButton from '../Common/SubmitButton';
@@ -60,16 +61,29 @@ const SavingsForm: FC = () => {
     }
   ];
 
+  const getVat = (): number => {
+    const value = Number(getFromLocalStorage('vat'));
+    if (value === 0) return value;
+    
+    return value || vat;
+  }
+  
+  const getIncomeTax = (): number => {
+    return Number(getFromLocalStorage('income-tax')) || incomeTax;
+  }
+
   const handleChangePrice = (value: any) => {
     setItemPrice(value);
   };
 
   const handleChangeVat = (e: any) => {
     setVat(e.target.value);
+    saveToLocalStorage('vat', e.target.value);
   };
 
-  const handleChangeIncome = (e: any) => {
+  const handleChangeIncomeTax = (e: any) => {
     setIncomeTax(e.target.value);
+    saveToLocalStorage('income-tax', e.target.value);
   };
 
   const moneyFormatter = (value: any) => {
@@ -120,7 +134,7 @@ const SavingsForm: FC = () => {
 
         <FormItem label="Stawka VAT" extra="Podaj stawkę podatku VAT">
           <Radio.Group
-            defaultValue={DEFAULT_VAT}
+            defaultValue={getVat()}
             style={inputStyle}
             onChange={e => handleChangeVat(e)}
             buttonStyle="solid"
@@ -136,9 +150,9 @@ const SavingsForm: FC = () => {
           extra="Podaj stawkę podatku dochodowego"
         >
           <Radio.Group
-            defaultValue={DEFAULT_INCOME_TAX}
+            defaultValue={getIncomeTax()}
             style={inputStyle}
-            onChange={e => handleChangeIncome(e)}
+            onChange={e => handleChangeIncomeTax(e)}
             buttonStyle="solid"
           >
             <Radio.Button value={0.17}>17%</Radio.Button>
