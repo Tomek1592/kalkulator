@@ -5,7 +5,7 @@ import { Form, InputNumber, Radio, Drawer } from 'antd';
 import styled from 'styled-components';
 
 import { saveToLocalStorage, getFromLocalStorage } from '../../helpers/localStorage'
-import { DEFAULT_VAT, DEFAULT_INCOME_TAX } from '../../constants/defaults';
+import { INCOME_TAX, VAT } from '../../constants/defaults';
 import SummaryCard from '../Common/SummaryCard';
 import SubmitButton from '../Common/SubmitButton';
 
@@ -19,8 +19,8 @@ const FormItem = styled(Form.Item)`
 
 const SavingsForm: FC = () => {
   const [itemPrice, setItemPrice] = useState(0);
-  const [vat, setVat] = useState(DEFAULT_VAT);
-  const [incomeTax, setIncomeTax] = useState(DEFAULT_INCOME_TAX);
+  const [vat, setVat] = useState(VAT);
+  const [incomeTax, setIncomeTax] = useState(INCOME_TAX);
   const [total, setTotal] = useState({
     incomeTaxSavings: 0,
     vatSavings: 0,

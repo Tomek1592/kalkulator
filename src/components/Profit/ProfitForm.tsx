@@ -4,12 +4,10 @@ import { faCut, faWallet, faGopuram } from '@fortawesome/free-solid-svg-icons';
 import { Checkbox, Col, Drawer, Form, InputNumber, Radio, Row } from 'antd';
 import styled from 'styled-components';
 
-import { saveToLocalStorage, getFromLocalStorage } from '../../helpers/localStorage'
-import {
-  DEFAULT_INCOME_TAX,
-  INSURANCE,
-  ZUS_RATES,
-} from '../../constants/defaults';
+import { getSocialFee, getSickFee, getHealthFeeTaxFree, getZUSFee } from '../../helpers/zusHelper';
+import { saveToLocalStorage, getFromLocalStorage } from '../../helpers/localStorage';
+import { INCOME_TAX, PERIOD, WORKING_HOURS, ZUS_TYPE } from '../../constants/defaults';
+
 import SummaryCard from '../Common/SummaryCard';
 import SubmitButton from '../Common/SubmitButton';
 
@@ -34,20 +32,25 @@ const PeriodRadioGroup = styled(Radio.Group)`
 `;
 
 const ProfitForm: FC = () => {
-  const [income, setIncome] = useState(0);
-  const [incomeTax, setIncomeTax] = useState(DEFAULT_INCOME_TAX);
-  const [ZUS, setZUS] = useState(ZUS_RATES.LEVEL1);
+  const sickInsuranceLSValue = JSON.parse(getFromLocalStorage('sick-insurance')) || false;
+  const ZUSTypeLSValue = getFromLocalStorage('zus') || ZUS_TYPE;
+  const incomeLSValue = Number(getFromLocalStorage('income')) || 0;
+  const incomeTaxLSValue = Number(getFromLocalStorage('income-tax')) || INCOME_TAX;
+
+  const [income, setIncome] = useState(incomeLSValue);
+  const [incomeTax, setIncomeTax] = useState(incomeTaxLSValue);
+  const [ZUSType, setZUSType] = useState(ZUSTypeLSValue);
   const [total, setTotal] = useState({ pit36: 0, cleanIncome: 0, ZUS: 0 });
-  const [period, setPeriod] = useState('month');
-  const [hours, setHours] = useState(168);
-  const [sickInsurance, setSickInsurance] = useState(false);
+  const [period, setPeriod] = useState(PERIOD);
+  const [hours, setHours] = useState(WORKING_HOURS);
+  const [sickInsurance, setSickInsurance] = useState(sickInsuranceLSValue);
   const [resultDrawer, setResultDrawer] = useState(false);
 
   const inputStyle = { width: '100%' };
   const ZUStypes = [
-    { id: 'zus-type-1', value: ZUS_RATES.LEVEL0, description: 'Ulga na start' },
-    { id: 'zus-type-2', value: ZUS_RATES.LEVEL1, description: 'Mały ZUS' },
-    { id: 'zus-type-3', value: ZUS_RATES.LEVEL2, description: 'Normalny ZUS' },
+    { id: 'zus-type-1', value: 'SMALL', description: 'Ulga na start/Mały ZUS' },
+    { id: 'zus-type-2', value: 'PREFERENTIAL', description: 'Preferencyjny ZUS' },
+    { id: 'zus-type-3', value: 'NORMAL', description: 'Normalny ZUS' },
   ];
   const summaryCardData = [
     {
@@ -73,20 +76,9 @@ const ProfitForm: FC = () => {
     },
   ];
 
-  const getIncomeTax = (): number => {
-    return Number(getFromLocalStorage('income-tax')) || incomeTax;
-  }
-
-  const getZUS = (): number => {
-    return Number(getFromLocalStorage('zus')) || ZUS;
-  }
-
-  const getSickInsurance = () => {
-    return JSON.parse(getFromLocalStorage('sick-insurance')) || sickInsurance;
-  }
-
   const handleChangeIncome = (value: any) => {
     setIncome(value);
+    saveToLocalStorage('income', value);
   };
 
   const handleChangeIncomeTax = (e: any) => {
@@ -95,8 +87,9 @@ const ProfitForm: FC = () => {
   };
 
   const handleChangeZUS = (e: any) => {
-    setZUS(e.target.value);
+    setZUSType(e.target.value);
     saveToLocalStorage('zus', e.target.value);
+    // TODO: add disabling for radio SickInsurance if zus is lower
   };
 
   const handleChangeSickInsurance = () => {
@@ -120,29 +113,25 @@ const ProfitForm: FC = () => {
   const submitForm = (e: any) => {
     setTotal({ pit36: 0, cleanIncome: 0, ZUS: 0 });
 
-    const totalHealth = (INSURANCE.HEALTH * 0.0775) / 0.09;
+    const type = ZUSType;
     let finalIncome = income;
-    let basicInsurance =
-      INSURANCE.OLDAGE + INSURANCE.PENSION + INSURANCE.ACCIDENT;
-    let totalZUS = ZUS;
+    let totalZUS = getZUSFee(type);
+    let socialFee = getSocialFee(type);
+    let healthFeeTaxFree = getHealthFeeTaxFree();
 
+    if (period === 'hour') finalIncome *= hours;
     if (sickInsurance) {
-      totalZUS += INSURANCE.SICK;
-      basicInsurance += INSURANCE.SICK;
+      socialFee += getSickFee(type);
+      totalZUS += getSickFee(type);
     }
-
-    if (period === 'hour') {
-      finalIncome *= hours;
-    }
-
-    let pit36 =
-      Math.round((finalIncome - basicInsurance) * incomeTax) - totalHealth;
+    
+    let pit36 = Math.round((finalIncome - socialFee)) * incomeTax - healthFeeTaxFree;
 
     setResultDrawer(false);
     setTotal({
-      pit36: Math.round(pit36) < 0 ? 0 : Math.round(pit36),
-      cleanIncome: Math.round(finalIncome - pit36 - totalZUS),
-      ZUS: Math.round(totalZUS),
+      pit36: Math.round(pit36) < 0 ? 0 : Number(pit36.toFixed(2)),
+      cleanIncome: Number((finalIncome - pit36 - totalZUS).toFixed(2)),
+      ZUS: Number(totalZUS.toFixed(2)),
     });
     setResultDrawer(true);
   };
@@ -210,7 +199,7 @@ const ProfitForm: FC = () => {
           extra="Podaj stawkę podatku dochodowego"
         >
           <Radio.Group
-            defaultValue={getIncomeTax()}
+            defaultValue={incomeTax}
             style={inputStyle}
             onChange={(e) => handleChangeIncomeTax(e)}
             buttonStyle="solid"
@@ -223,7 +212,7 @@ const ProfitForm: FC = () => {
 
         <FormItem label="Składki ZUS" extra="Jaką składkę ZUS opłacasz">
           <Radio.Group
-            defaultValue={getZUS()}
+            defaultValue={ZUSType}
             style={inputStyle}
             onChange={(e) => handleChangeZUS(e)}
             buttonStyle="solid"
@@ -236,9 +225,9 @@ const ProfitForm: FC = () => {
           </Radio.Group>
         </FormItem>
 
-        <FormItem help="Czy opłacasz stawkę chorobową?">
+        <FormItem help="Dobrowolna składka chorobowa.">
           <Checkbox
-            defaultChecked={getSickInsurance()}
+            defaultChecked={sickInsurance}
             onChange={handleChangeSickInsurance}
           >
             Opłacam składkę chorobową
